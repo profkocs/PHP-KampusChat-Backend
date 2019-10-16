@@ -141,7 +141,7 @@ public function incrementGroup($user_id){
 }
 
 
-/**
+
 * getInformations() -> Eşleşme Tablosundaki Verilere Erişilen Fonksiyon
 * @param $user_id
 * return "OK" -> İşlem Tamamlandı Bilgisi
@@ -167,8 +167,8 @@ catch(\Exception $exception){
 
 
 }
-*/
 
+*/
 
 
 
