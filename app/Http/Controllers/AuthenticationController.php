@@ -180,7 +180,7 @@ class AuthenticationController extends BaseController{
     $code = str_random(6);
 
     $to_name = 'User';
-    $data = array('name'=>"This code is for your verification.Please do not share this code with anyone.", 'body' => 'Your Verification Code :'.$code);
+    $data = array('name'=>"This code is for your verification.Please do not share this code with anyone.", 'body' => 'Your Verification Code: '.$code);
     Mail::send('emails.mail', $data, function($message) use ($to_name,$email) {
     $message->to($email, $to_name)
     ->subject('KampusChat : Feel Unique');
@@ -190,7 +190,7 @@ class AuthenticationController extends BaseController{
     $input['email'] = $email;
     $input['code'] = $code;
 
-    Code::create($input);
+    Code::updateOrCreate($input);
 
     return $this->sendResponse("OK");
   }
