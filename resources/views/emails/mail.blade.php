@@ -1,2 +1,3 @@
-<strong>{{ $name }}</strong>:
+<strong>{{ $name }}</strong>
+
 <strong>{{ $body }}
