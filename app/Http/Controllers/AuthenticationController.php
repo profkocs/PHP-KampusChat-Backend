@@ -190,7 +190,7 @@ class AuthenticationController extends BaseController{
     $input['email'] = $email;
     $input['code'] = $code;
 
-    Code::updateOrCreate($input);
+    Code::updateOrCreate(['email' => $email], ['code' => $code]);
 
     return $this->sendResponse("OK");
   }
