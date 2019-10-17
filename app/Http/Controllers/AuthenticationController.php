@@ -183,8 +183,8 @@ class AuthenticationController extends BaseController{
     $data = array('name'=>"KampusChat Veritification Code", 'body' => $code);
     Mail::send('emails.mail', $data, function($message) use ($to_name,$email) {
     $message->to($email, $to_name)
-    ->subject('KampusChat Veritification Code');
-    $message->from('Brk334448@gmail.com','Test Mail');
+    ->subject('Your Veritification Code :'$code);
+    $message->from('Brk334448@gmail.com','KampusChat Veritification Code');
     });
 
     $input['email'] = $email;
