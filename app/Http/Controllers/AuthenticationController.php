@@ -180,11 +180,11 @@ class AuthenticationController extends BaseController{
     $code = str_random(6);
 
     $to_name = 'User';
-    $data = array('name'=>"KampusChat", 'body' => 'Code');
+    $data = array('name'=>"KampusChat", 'body' => 'Your Verification Code :'.$code);
     Mail::send('emails.mail', $data, function($message) use ($to_name,$email) {
     $message->to($email, $to_name)
-    ->subject('Your Verification Code :'.$code);
-    $message->from('Brk334448@gmail.com','KampusChat Veritification Code');
+    ->subject('This code is for your verification.Please do not share this code with anyone');
+    $message->from('Brk334448@gmail.com','KampusChat Verification Code');
     });
 
     $input['email'] = $email;
