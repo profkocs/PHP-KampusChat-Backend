@@ -178,19 +178,15 @@ class AuthenticationController extends BaseController{
     try{
 
     $code = str_random(6);
-    /*
-    $to_name = 'Burak';
-    $to_email = $email;
-    $data = array('name'=>"Burak Koç", "body" => $code);
-    Mail::send('emails.mail', $data, function($message) use ($to_name, $to_email) {
-    $message->to($to_email, $to_name)
-    ->subject('Verify Code');
-    $message->from('simpleappvision@gmail.com','KampusChat');
+
+    $to_name = 'User';
+    $data = array('name'=>"KampusChat Veritification Code", 'body' => $code);
+    Mail::send('emails.mail', $data, function($message) use ($to_name,$email) {
+    $message->to($email, $to_name)
+    ->subject('KampusChat Veritification Code');
+    $message->from('Brk334448@gmail.com','Test Mail');
     });
 
-    // TODO : Mail Gönderme Kodları Burada   Olacak
-
-    */
     $input['email'] = $email;
     $input['code'] = $code;
 
