@@ -27,7 +27,6 @@ public function createInformations($user_id){
   $input['group'] = 0;
   $input['shuffle_count'] = 3;
   $input['is_online'] = true;
-  $input['last_seen_date'] = date('Y-m-d H:m:s');
 
  try{
   Match::create($input);
