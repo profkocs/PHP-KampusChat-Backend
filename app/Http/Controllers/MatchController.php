@@ -206,7 +206,9 @@ if($count == 3){
 }
 
 }
-
+catch(\Exception $exception){
+  return $this->sendError("Exception",$exception->getMessage());
+}
 
 
 }
