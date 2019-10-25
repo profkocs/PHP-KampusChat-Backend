@@ -65,7 +65,7 @@ if(Match::where('user_id',$user_id)->whereDay('updated_at', '!=' , date('d'))->u
   // 1 Gün Geçmemişse Son Görülme ve Online Bilgisi Güncellensin
 $input = Match::where('user_id',$user_id)->first(); //Match::where('user_id',$user_id)->first();
 $input['is_online'] = true;
-Match::where('id',$input['id'])->update('is_online' => $input['is_online']]);
+Match::where('id',$input['id'])->update(['is_online' => $input['is_online']]);
 
 return $this->sendResponse($input['shuffle_count']);
 
