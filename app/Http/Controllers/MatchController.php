@@ -56,7 +56,7 @@ $input['shuffle_count'] = 3;
 
 try{
  // Son Görülmeden İtibaren 1 Gün Geçmişsse tüm bilgiler Güncellensin
-if(Match::where('user_id',$user_id)->whereDay('last_seen_date', '!=' , date('d'))->update($input)){
+if(Match::where('user_id',$user_id)->whereDay('updated_at', '!=' , date('d'))->update($input)){
 
   return $this->sendResponse($input['shuffle_count']);
 
@@ -64,9 +64,8 @@ if(Match::where('user_id',$user_id)->whereDay('last_seen_date', '!=' , date('d')
 
   // 1 Gün Geçmemişse Son Görülme ve Online Bilgisi Güncellensin
 $input = Match::where('user_id',$user_id)->first(); //Match::where('user_id',$user_id)->first();
-$input['last_seen_date'] = date('Y-m-d H:m:s');
 $input['is_online'] = true;
-Match::where('id',$input['id'])->update(['last_seen_date' => $input['last_seen_date'] , 'is_online' => $input['is_online']]);
+Match::where('id',$input['id'])->update('is_online' => $input['is_online']]);
 
 return $this->sendResponse($input['shuffle_count']);
 
