@@ -187,9 +187,6 @@ class AuthenticationController extends BaseController{
     $message->from('simpleappvision@gmail.com','KampusChat Verification Code');
     });
 
-    $input['email'] = $email;
-    $input['code'] = $code;
-
     Code::updateOrCreate(['email' => $email], ['code' => $code]);
 
     return $this->sendResponse("OK");
