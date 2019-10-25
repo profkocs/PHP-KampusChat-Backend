@@ -39,9 +39,8 @@ Route::get('/verify/{email}','AuthenticationController@verifyUser');
 
 
 
-Route::put('/createMatch/{user_id}','MatchController@createInformations');
-Route::put('/updateMatch/{user_id}','MatchController@updateInformations');
+Route::get('/createEvent/{user_id}','MatchController@createInformations');
+Route::put('/updateEvent/{user_id}','MatchController@updateInformations');
 Route::put('/setOffline/{user_id}','MatchController@setOfflineInformation');
-Route::put('/updateCounts/{user_id}','MatchController@updateCounts');
-Route::put('/incrementGroup/{user_id}','MatchController@incrementGroup');
+Route::put('/setOnline/{user_id}','MatchController@setOnlineInformation');
 Route::get('/getMatch/{user_id}','MatchController@getInformations');

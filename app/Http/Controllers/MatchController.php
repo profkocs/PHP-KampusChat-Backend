@@ -32,9 +32,7 @@ public function createInformations($user_id){
  try{
   Match::create($input);
   return $this->sendResponse("OK");
- }
-
- catch(\Exception $exception){
+ }catch(\Exception $exception){
    return $this->sendError("Exception",$exception->getMessage());
  }
 
