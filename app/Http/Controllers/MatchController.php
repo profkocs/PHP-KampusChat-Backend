@@ -50,7 +50,6 @@ public function createInformations($user_id){
 public function updateInformations($user_id){
 
 // defaults
-$input['last_seen_date'] = date('Y-m-d H:m:s');
 $input['is_online'] = true;
 $input['group'] = 0;
 $input['shuffle_count'] = 3;
