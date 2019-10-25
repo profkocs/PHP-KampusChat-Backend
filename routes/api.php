@@ -46,4 +46,4 @@ Route::put('/setOnline/{user_id}','MatchController@setOnlineInformation');
 Route::get('/getMatch/{user_id}','MatchController@getInformations');
 
 
-Route:get('/shuffle/{user_id}','MatchController@findUser');
+Route::get('/shuffle/{user_id}','MatchController@findUser');
