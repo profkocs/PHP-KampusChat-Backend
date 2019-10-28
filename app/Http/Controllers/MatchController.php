@@ -183,15 +183,15 @@ if(!(Chat::where('owner_user_id',$user_id)->where('guest_user_id',$match->user_i
   // TODO : Güncelleme de olacak  : Kullanıcılar Eşleşmiş ve chats tablosundan owner , guest deleted at kontrol edildikten sonra uygunsa engel durumu kontrol edilcek.
 
   // events bilgileri güncellendi
-*/
+
   // eşleşilen kullanıcı bilgileri gönderilir.
-  $input = User::where('user_id',$match->user_id)->first();
-  //$input['department_id'] = Department::find($input['department_id'])->value('name');
 
-  return $this->sendResponse($input);
 }
+*/
+$input = User::where('user_id',$match->user_id)->first();
+//$input['department_id'] = Department::find($input['department_id'])->value('name');
 
-
+return $this->sendResponse($input);
 }
 
 $this->sendResponse("Users Not Founded");
