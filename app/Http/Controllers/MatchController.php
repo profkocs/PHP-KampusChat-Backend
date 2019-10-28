@@ -164,7 +164,7 @@ if(!(Match::where('user_id',$user_id)->where('shuffle_count','>',0))){
     return $this->sendError("Not Completed","Not Enough Shuffle Count");
 }
 $count = 0;
-$matchs = Match::where('Group',0)->limit(1);
+$matchs = Match::where('group','0')->limit(1);
 return $this->sendResponse($matchs);
 foreach($matchs as $match){
 /*
