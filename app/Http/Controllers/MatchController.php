@@ -166,7 +166,7 @@ if(!(Match::where('user_id',$user_id)->where('shuffle_count','>',0))){
 $count = 0;
 $matchs = Match::where('group',0)->limit(3);
 foreach($matchs as $match){
-
+/*
 if(!(Chat::where('owner_user_id',$user_id)->where('guest_user_id',$match->user_id)->orWhere('owner_user_id',$match->user_id)->where('guest_user_id',$user_id))){
   // kullanıcılar daha önce eşleşmemiş , engel olayı olmamış
 
@@ -183,10 +183,10 @@ if(!(Chat::where('owner_user_id',$user_id)->where('guest_user_id',$match->user_i
   // TODO : Güncelleme de olacak  : Kullanıcılar Eşleşmiş ve chats tablosundan owner , guest deleted at kontrol edildikten sonra uygunsa engel durumu kontrol edilcek.
 
   // events bilgileri güncellendi
-
+*/
   // eşleşilen kullanıcı bilgileri gönderilir.
   $input = User::where('user_id',$match->user_id)->first();
-  $input['department_id'] = Department::find($input['department_id'])->value('name');
+  //$input['department_id'] = Department::find($input['department_id'])->value('name');
 
   return $this->sendResponse($input);
 }
