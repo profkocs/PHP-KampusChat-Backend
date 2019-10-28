@@ -165,6 +165,7 @@ if(!(Match::where('user_id',$user_id)->where('shuffle_count','>',0))){
 }
 $count = 0;
 $matchs = Match::where('group',0)->limit(1);
+return $this->sendResponse($matchs);
 foreach($matchs as $match){
 /*
 if(!(Chat::where('owner_user_id',$user_id)->where('guest_user_id',$match->user_id)->orWhere('owner_user_id',$match->user_id)->where('guest_user_id',$user_id))){
