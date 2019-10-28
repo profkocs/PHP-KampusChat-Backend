@@ -43,7 +43,4 @@ Route::get('/createEvent/{user_id}','MatchController@createInformations');
 Route::put('/updateEvent/{user_id}','MatchController@updateInformations');
 Route::put('/setOffline/{user_id}','MatchController@setOfflineInformation');
 Route::put('/setOnline/{user_id}','MatchController@setOnlineInformation');
-Route::get('/getMatch/{user_id}','MatchController@getInformations');
-
-
 Route::get('/shuffle/{user_id}','MatchController@findUser');
