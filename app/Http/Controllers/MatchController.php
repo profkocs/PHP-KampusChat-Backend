@@ -191,16 +191,11 @@ if(!(Chat::where('owner_user_id',$user_id)->where('guest_user_id',$match->user_i
   return $this->sendResponse($input);
 }
 
-//kullanıcılar daha önce eşleşmiş
-$count++;
-
-if($count == 3){
-  // uygun kullanıcı bulunamadı
-  $this->sendResponse("Users Not Founded");
-}
-
 
 }
+
+return $this->sendResponse("Users Not Founded");
+
 
 }
 catch(\Exception $exception){
