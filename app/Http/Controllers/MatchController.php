@@ -164,10 +164,10 @@ if(!(Match::where('user_id',$user_id)->where('shuffle_count','>',0))){
     return $this->sendError("Not Completed","Not Enough Shuffle Count");
 }
 $count = 0;
-$match = Match::where('group','>',-1)->limit(3);
-while($count < 3){
+$matchs = Match::where('group','>',-1)->limit(3);
+foreach($match as $matchs){
 
-if(!(Chat::where('owner_user_id',$user_id)->where('guest_user_id',$match[$count]->user_id)->orWhere('owner_user_id',$match[$count]->user_id)->where('guest_user_id',$user_id))){
+if(!(Chat::where('owner_user_id',$user_id)->where('guest_user_id',$match->user_id)->orWhere('owner_user_id',$match->user_id)->where('guest_user_id',$user_id))){
   // kullanıcılar daha önce eşleşmemiş , engel olayı olmamış
 
   // Event Bilgilerini Güncelleyecek Fonksiyonlar
