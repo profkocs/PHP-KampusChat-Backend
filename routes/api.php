@@ -19,9 +19,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 */
 Route::group(['middleware' => 'auth:api'], function() {
 // lots of routes that require auth middleware
-Route::get('/user', function (Request $request) {return $response = [
-    'result'  => $request
-]});
+Route::get('/user', function (Request $request) {return
+
+  $response = [
+      'result'  => $request->user(),
+  ];
+
+return $response; });
 
 });
 
