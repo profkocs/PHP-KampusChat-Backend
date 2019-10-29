@@ -10,6 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Department extends Model
 {
-    $protected $timestamp = false;
+    protected $fillable = ['id','name'];
     //
 }
