@@ -167,7 +167,7 @@ $count = 0;
 $matchs = Match::where('group','>',-1)->limit(3)->get();
 foreach($matchs as $match){
 
-if(!(Chat::where('owner_user_id',$user_id)->where('guest_user_id',$match->user_id)->orWhere('owner_user_id',$match->user_id)->where('guest_user_id',$user_id))){
+if( ($match->user_id != $user_id) &&  !(Chat::where('owner_user_id',$user_id)->where('guest_user_id',$match->user_id)->orWhere('owner_user_id',$match->user_id)->where('guest_user_id',$user_id))){
   // kullanıcılar daha önce eşleşmemiş , engel olayı olmamış
 
   // Event Bilgilerini Güncelleyecek Fonksiyonlar
@@ -186,11 +186,13 @@ if(!(Chat::where('owner_user_id',$user_id)->where('guest_user_id',$match->user_i
 
   // eşleşilen kullanıcı bilgileri gönderilir.
 
-}
-$input = User::where('id',$match->user_id)->first();
-//$input['department_id'] = Department::find($input['department_id'])->value('name');
+  $input = User::where('id',$match->user_id)->first();
+  //$input['department_id'] = Department::find($input['department_id'])->value('name');
 
-return $this->sendResponse($input);
+  return $this->sendResponse($input);
+
+}
+
 }
 
 $this->sendResponse("Users Not Founded");
