@@ -78,7 +78,7 @@ class AuthenticationController extends BaseController{
 
     }
     catch(\Exception $exception){
-          return $this->sendError($exception->getMessage());
+          return $this->sendError("Exception",$exception->getMessage());
     }
 
 
@@ -104,7 +104,7 @@ class AuthenticationController extends BaseController{
 
     }
     catch(\Exception $exception){
-          return $this->sendError($exception->getMessage());
+          return $this->sendError("Exception",$exception->getMessage());
     }
 
 
@@ -227,7 +227,7 @@ class AuthenticationController extends BaseController{
 
 
   }catch(\Exception $exception){
-        return $this->sendError($exception->getMessage());
+        return $this->sendError("Exception",$exception->getMessage());
   }
 
   }
@@ -261,35 +261,13 @@ class AuthenticationController extends BaseController{
 
      }
      catch(\Exception $exception){
-           return $this->sendError($exception->getMessage());
+           return $this->sendError("Exception",$exception->getMessage());
      }
 
 
   }
 
 
-  /**
-  * verifyUser() -> Kullanıcı Hesabını Aktifleştirecek Yazılım
-  * @param  $email -> Email Adresini İçeren Değişken
-  **/
-
-  public function verifyUser($email){
-
-   try{
-
-    if(User::where('email',$email)->update(['email_verified_at' => date('Y-m-d H:i:s')])){
-      return $this->sendResponse('OK');
-    }
-
-    return $this->sendError("Not Completed","Resource Not Found");
-
-   }
-   catch(\Exception $exception){
-         return $this->sendError($exception->getMessage());
-   }
-
-
-  }
 
 
 

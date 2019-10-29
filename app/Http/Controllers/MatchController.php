@@ -165,9 +165,8 @@ if(!(Match::where('user_id',$user_id)->where('shuffle_count','>',0))){
 }
 $count = 0;
 $matchs = Match::where('group','>',-1)->limit(3)->get();
-return $this->sendResponse($matchs);
 foreach($matchs as $match){
-/*
+
 if(!(Chat::where('owner_user_id',$user_id)->where('guest_user_id',$match->user_id)->orWhere('owner_user_id',$match->user_id)->where('guest_user_id',$user_id))){
   // kullanıcılar daha önce eşleşmemiş , engel olayı olmamış
 
@@ -188,7 +187,6 @@ if(!(Chat::where('owner_user_id',$user_id)->where('guest_user_id',$match->user_i
   // eşleşilen kullanıcı bilgileri gönderilir.
 
 }
-*/
 $input = User::where('user_id',$match->user_id)->first();
 //$input['department_id'] = Department::find($input['department_id'])->value('name');
 

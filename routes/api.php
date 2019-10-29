@@ -19,7 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 */
 Route::group(['middleware' => 'auth:api'], function() {
 // lots of routes that require auth middleware
-Route::get('/user', function (Request $request) {return $request->user();});
+Route::get('/user', function (Request $request) {return $response = [
+    'result'  => $request
+]});
 
 });
 
@@ -28,15 +30,11 @@ Route::get('/departments/{id}','EducationController@departments');
 
 Route::post('/register','AuthenticationController@register');
 Route::post('/login','AuthenticationController@login');
-Route::get('/isEmail/{email}','AuthenticationController@isEmailUsed');
-Route::get('/isUsername/{username}','AuthenticationController@isUsernameUsed');
-Route::get('/code/{email}','AuthenticationController@sendCode');
-Route::post('/code','AuthenticationController@verifyCode');
-Route::post('/password','AuthenticationController@updatePassword');
-Route::get('/verify/{email}','AuthenticationController@verifyUser');
-//Route::get('/checkBannedList/{id}','AuthenticationController@checkBannedList');
-
-
+Route::get('/isEmailUsed/{email}','AuthenticationController@isEmailUsed');
+Route::get('/isUsernameUsed/{username}','AuthenticationController@isUsernameUsed');
+Route::get('/sendCode/{email}','AuthenticationController@sendCode');
+Route::post('/verifyCode','AuthenticationController@verifyCode');
+Route::post('/updatePassword','AuthenticationController@updatePassword');
 
 
 Route::get('/createEvent/{user_id}','MatchController@createInformations');

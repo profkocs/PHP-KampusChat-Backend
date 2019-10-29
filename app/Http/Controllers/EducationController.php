@@ -26,7 +26,7 @@ class EducationController extends BaseController{
    return $this->sendResponse($result);
  }
  catch(\Exception $exception){
-   return $this->sendError($exception->getMessage());
+   return $this->sendError("Exception",$exception->getMessage());
  }
 
 
@@ -47,7 +47,7 @@ try{
 }
 
 catch(\Exception $exception){
-  return $this->sendError($exception->getMessage());
+  return $this->sendError("Exception",$exception->getMessage());
 }
 
 }
