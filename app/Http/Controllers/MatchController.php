@@ -166,8 +166,8 @@ if(!(Match::where('user_id',$user_id)->where('shuffle_count','>',0))){
 $count = 0;
 $matchs = Match::where('group','>',-1)->limit(3)->get();
 foreach($matchs as $match){
-
-if( ($match->user_id != $user_id) &&  !(Chat::where('owner_user_id',$user_id)->where('guest_user_id',$match->user_id)->orWhere('owner_user_id',$match->user_id)->where('guest_user_id',$user_id))){
+//&&  !(Chat::where('owner_user_id',$user_id)->where('guest_user_id',$match->user_id)->orWhere('owner_user_id',$match->user_id)->where('guest_user_id',$user_id))
+if(($match->user_id != $user_id)){
   // kullanıcılar daha önce eşleşmemiş , engel olayı olmamış
 
   // Event Bilgilerini Güncelleyecek Fonksiyonlar
@@ -195,7 +195,7 @@ if( ($match->user_id != $user_id) &&  !(Chat::where('owner_user_id',$user_id)->w
 
 }
 
-$this->sendResponse("Users Not Founded");
+return $this->sendResponse("Users Not Founded");
 
 
 }
