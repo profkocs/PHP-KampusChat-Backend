@@ -167,7 +167,7 @@ $count = 0;
 $matchs = Match::where('group','>',-1)->limit(3)->get();
 foreach($matchs as $match){
 //&&  !(Chat::where('owner_user_id',$user_id)->where('guest_user_id',$match->user_id)->orWhere('owner_user_id',$match->user_id)->where('guest_user_id',$user_id))
-if(($match->user_id != $user_id)){
+if(($match->user_id != $user_id) &&  !(Chat::where('owner_user_id',$user_id)->where('guest_user_id',$match->user_id)->first())){
   // kullanıcılar daha önce eşleşmemiş , engel olayı olmamış
 
   // Event Bilgilerini Güncelleyecek Fonksiyonlar
