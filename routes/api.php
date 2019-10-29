@@ -19,13 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 */
 Route::group(['middleware' => 'auth:api'], function() {
 // lots of routes that require auth middleware
-Route::get('/user', function (Request $request) {return
-
-  $response = [
-      'result'  => $request->user(),
-  ];
-
-return $response; });
+Route::get('/user', function (Request $request) {return $request->user();});
 
 });
 
@@ -39,6 +33,9 @@ Route::get('/isUsernameUsed/{username}','AuthenticationController@isUsernameUsed
 Route::get('/sendCode/{email}','AuthenticationController@sendCode');
 Route::post('/verifyCode','AuthenticationController@verifyCode');
 Route::post('/updatePassword','AuthenticationController@updatePassword');
+//Route::get('/checkBannedList/{id}','AuthenticationController@checkBannedList');
+
+
 
 
 Route::get('/createEvent/{user_id}','MatchController@createInformations');

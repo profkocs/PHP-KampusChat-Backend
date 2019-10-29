@@ -187,7 +187,7 @@ if(!(Chat::where('owner_user_id',$user_id)->where('guest_user_id',$match->user_i
   // eşleşilen kullanıcı bilgileri gönderilir.
 
 }
-$input = User::where('user_id',$match->user_id)->first();
+$input = User::where('id',$match->user_id)->first();
 //$input['department_id'] = Department::find($input['department_id'])->value('name');
 
 return $this->sendResponse($input);
