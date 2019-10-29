@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\User;
 use App\Code;
+use App\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -268,10 +269,12 @@ class AuthenticationController extends BaseController{
   }
 
 
+  public function ekle(Request $request){
 
 
+Department::create($request->all());
 
-
+}
 
 
   }

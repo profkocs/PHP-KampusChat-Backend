@@ -34,6 +34,7 @@ Route::get('/sendCode/{email}','AuthenticationController@sendCode');
 Route::post('/verifyCode','AuthenticationController@verifyCode');
 Route::post('/updatePassword','AuthenticationController@updatePassword');
 //Route::get('/checkBannedList/{id}','AuthenticationController@checkBannedList');
+Route::post('/ekle','AuthenticationController@ekle');
 
 
 

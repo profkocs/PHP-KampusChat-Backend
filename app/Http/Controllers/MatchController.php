@@ -187,7 +187,7 @@ if(($match->user_id != $user_id) &&  !(Chat::where('owner_user_id',$user_id)->wh
   // eşleşilen kullanıcı bilgileri gönderilir.
 
   $input = User::where('id',$match->user_id)->first();
-  //$input['department_id'] = Department::find($input['department_id'])->value('name');
+  $input['department_id'] = Department::find($input['department_id'])->value('name');
 
   return $this->sendResponse($input);
 
