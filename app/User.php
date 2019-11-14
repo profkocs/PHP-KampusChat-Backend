@@ -18,7 +18,7 @@ class User extends Authenticatable
 
 
     protected $fillable = [
-        'fullname', 'email', 'password','department_id','username','gender','date_of_birth'
+        'fullname', 'email', 'password','department_id','username','gender','date_of_birth','is_verified'
     ];
     /**
      * The attributes that should be hidden for arrays.
