@@ -42,7 +42,7 @@ class EducationController extends BaseController{
 public function departments($id){
 
 try{
-    $result = University::find($id)->departments;
+    $result = University::where("id",$id)->departments;
     return $this->sendResponse($result);
 }
 

@@ -183,7 +183,6 @@ if(($match->user_id != $user_id) &&  !(Chat::where('owner_user_id',$user_id)->wh
   // TODO : Güncelleme de olacak  : Kullanıcılar Eşleşmiş ve chats tablosundan owner , guest deleted at kontrol edildikten sonra uygunsa engel durumu kontrol edilcek.
 
   // events bilgileri güncellendi
-
   // eşleşilen kullanıcı bilgileri gönderilir.
 
   $input = User::where('id',$match->user_id)->first();

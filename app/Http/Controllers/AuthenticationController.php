@@ -269,14 +269,6 @@ class AuthenticationController extends BaseController{
   }
 
 
-  public function ekle(Request $request){
-
-
-Department::create($request->all());
-
-}
-
-
   }
 
 ?>
