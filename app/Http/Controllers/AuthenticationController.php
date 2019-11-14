@@ -47,14 +47,14 @@ class AuthenticationController extends BaseController{
       // email daha önce kullanılmış mı
       if(($this->isEmailAvailable($input['email'])) == "not"){
         return $this->sendError("Not Completed","Email Already Used");
-      }else if((this->isEmailAvailable($input['email'])) == "exception"){
+      }else if(($this->isEmailAvailable($input['email'])) == "exception"){
         return $this->sendError("Exception","Something Went Wrong");
       }
 
       //username daha önce kullanılmışmı
       if(($this->isUsernameAvailable($input['username'])) == "not"){
         return $this->sendError("Not Completed","Username Already Used");
-      }else if((this->isUsernameAvailable($input['username'])) == "exception"){
+      }else if(($this->isUsernameAvailable($input['username'])) == "exception"){
         return $this->sendError("Exception","Something Went Wrong");
       }
 
