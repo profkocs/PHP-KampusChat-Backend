@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('fullname');
             $table->string('gender');
             $table->timestamp('date_of_birth');
+            $table->string('is_verified');
             $table->string('bio')->nullable();
             $table->string('profile_photo_url')->nullable();
             $table->timestamps();

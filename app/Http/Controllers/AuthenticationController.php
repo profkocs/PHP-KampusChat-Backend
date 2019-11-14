@@ -38,34 +38,44 @@ class AuthenticationController extends BaseController{
       ]);
 
       $input = $request->all();
-
+      $input['is_verified'] = "no";
 
       if ($validator->fails()) {
           return $this->sendError("Validation",$validator->errors());
       }
 
-      if(!($this->isEmailAvailable($input['email']))){
-        return $this->sendError("Email","Email Already Used");
+      // email daha önce kullanılmış mı
+      if(($this->isEmailAvailable($input['email'])) == "not"){
+        return $this->sendError("Not Completed","Email Already Used");
+      }else if((this->isEmailAvailable($input['email'])) == "exception"){
+        return $this->sendError("Exception","Something Went Wrong");
       }
 
+      //username daha önce kullanılmışmı
+      if(($this->isUsernameAvailable($input['username'])) == "not"){
+        return $this->sendError("Not Completed","Username Already Used");
+      }else if((this->isUsernameAvailable($input['username'])) == "exception"){
+        return $this->sendError("Exception","Something Went Wrong");
+      }
 
-
+      //şifreleme yapıyoruz
       $input['password'] = bcrypt($input['password']);
 
      try{
 
-
       if($this->sendCode($input['email'])){
+        // kodu gönderdikten sonra kullanıcıyı kayıt ediyoruz.
         $user = User::create($input);
         $result['token'] = $user->createToken('KampusChat')-> accessToken;
         $result['user_id'] =  $user->id;
-      }else{
 
+      }else{
+      // kod göndermede hata oluştu
       return $this->sendError("Exception","Code Is Not Sended");
 
       }
 
-
+      // işlem başarılı sonuç dönder
       return $this->sendResponse($result);
 
      }catch(\Exception $exception){
@@ -78,7 +88,7 @@ class AuthenticationController extends BaseController{
 
 
   /**
-  * isEmailUsed -> Email Adresinin Sistemde Olup Olmadığını Kontrol Eder
+  * isEmailAvailable -> Email Adresinin Sistemde Olup Olmadığını Kontrol Eder
   * @param $email -> Aranacak Email Adresi
   **/
 
@@ -88,41 +98,41 @@ class AuthenticationController extends BaseController{
     try{
 
      if(User::where('email',$email)->value('email')){
-       return false;
+       return "not";
      }
      else{
-       return true;
+       return "available";
      }
 
     }
     catch(\Exception $exception){
-          return $this->sendError("Exception",$exception->getMessage());
+          return "exception";
     }
 
 
   }
 
   /**
-  * isUsernameUsed() -> Kullanıcı İsminin Sistemde Olup Olmadığını Kontrol Eder
+  * isUsernameAvailable() -> Kullanıcı İsminin Sistemde Olup Olmadığını Kontrol Eder
   * @param $username -> Aranacak Kullanıcı ismi
   **/
 
 
-  public function isUsernameUsed($username){
+  public function isUsernameAvailable($username){
 
     try{
 
      if(User::where('username',$username)->value('username')){
-       return $this->sendError('Not Completed','Username is Already Used');
+       return "not";
 
      }
      else{
-       return $this->sendResponse('OK');
+       return "available";
      }
 
     }
     catch(\Exception $exception){
-          return $this->sendError("Exception",$exception->getMessage());
+          return "exception";
     }
 
 
@@ -165,8 +175,8 @@ class AuthenticationController extends BaseController{
     try {
 
           if(Auth::attempt([$login_column => $input[$login_column], 'password' => $input['password']])){
-            $user = Auth::user();
 
+            $user = Auth::user();
             $result['token'] = $user->createToken('KampusChat')-> accessToken;
             $result['user_id'] = $user->getAuthIdentifier();
             return $this->sendResponse($result);
@@ -209,7 +219,7 @@ class AuthenticationController extends BaseController{
     return true;
   }
   catch(\Exception $exception){
-      return $exception->getMessage();
+      return false;
   }
 
   }
@@ -237,7 +247,11 @@ class AuthenticationController extends BaseController{
   $input = $request->all();
 
   if(Code::where('email',$input['email'])->where('code',$input['code'])->whereDay('updated_at', '=' , date('d'))->value('id')){
-    return $this->sendResponse("OK");
+
+    if(User::where('email',$input['email'])->update(['is_verified' => 'yes'])){
+      return $this->sendResponse("OK");
+    }
+      return $this->sendError("Exception","Something Went Wrong");
   }
 
     return $this->sendError("Not Completed","Code is Incorrect");
