@@ -52,7 +52,7 @@ class AuthenticationController extends BaseController{
      try{
 
 
-      if(this->sendCode($input['email'])){
+      if(sendCode($input['email'])){
         $user = User::create($input);
         $result['token'] = $user->createToken('KampusChat')-> accessToken;
         $result['user_id'] =  $user->id;
