@@ -41,7 +41,7 @@ class AuthenticationController extends BaseController{
           return $this->sendError("Validation",$validator->errors());
       }
 
-      if(!(isEmailAvailable($input['email']))){
+      if(!($this->isEmailAvailable($input['email']))){
         return $this->sendError("Email","Email Already Used");
       }
 
@@ -52,7 +52,7 @@ class AuthenticationController extends BaseController{
      try{
 
 
-      if(sendCode($input['email'])){
+      if($this->sendCode($input['email'])){
         $user = User::create($input);
         $result['token'] = $user->createToken('KampusChat')-> accessToken;
         $result['user_id'] =  $user->id;
