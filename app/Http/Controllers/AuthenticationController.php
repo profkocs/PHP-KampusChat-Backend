@@ -41,14 +41,28 @@ class AuthenticationController extends BaseController{
           return $this->sendError("Validation",$validator->errors());
       }
 
+      if(!(isEmailAvailable($input['email']))){
+        return $this->sendError("Email","Email Already Used");
+      }
+
+
       $input = $request->all();
       $input['password'] = bcrypt($input['password']);
 
      try{
 
-      $user = User::create($input);
-      $result['token'] = $user->createToken('KampusChat')-> accessToken;
-      $result['user_id'] =  $user->id;
+
+      if(this->sendCode($input['email'])){
+        $user = User::create($input);
+        $result['token'] = $user->createToken('KampusChat')-> accessToken;
+        $result['user_id'] =  $user->id;
+      }else{
+
+      return $this->sendError("Exception","Code Is Not Sended");
+
+      }
+
+
       return $this->sendResponse($result);
 
      }catch(\Exception $exception){
@@ -65,16 +79,16 @@ class AuthenticationController extends BaseController{
   * @param $email -> Aranacak Email Adresi
   **/
 
-  public function isEmailUsed($email){
+  public function isEmailAvailable($email){
 
 
     try{
 
      if(User::where('email',$email)->value('email')){
-       return $this->sendError('Not Completed','Email is Already Used');
+       return false;
      }
      else{
-       return $this->sendResponse("OK");
+       return true;
      }
 
     }
@@ -189,11 +203,10 @@ class AuthenticationController extends BaseController{
     });
 
     Code::updateOrCreate(['email' => $email], ['code' => $code]);
-
-    return $this->sendResponse("OK");
+    return true;
   }
   catch(\Exception $exception){
-      return $this->sendError('Exception',$exception->getMessage());
+      return $exception->getMessage();
   }
 
   }
