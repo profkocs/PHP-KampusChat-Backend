@@ -37,6 +37,9 @@ class AuthenticationController extends BaseController{
 
       ]);
 
+      $input = $request->all();
+
+
       if ($validator->fails()) {
           return $this->sendError("Validation",$validator->errors());
       }
@@ -46,7 +49,7 @@ class AuthenticationController extends BaseController{
       }
 
 
-      $input = $request->all();
+
       $input['password'] = bcrypt($input['password']);
 
      try{
