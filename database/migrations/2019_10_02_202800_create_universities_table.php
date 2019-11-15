@@ -17,6 +17,7 @@ class CreateUniversitiesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('email_type')->unique();
+            $table->timestamps();
         });
     }
 
