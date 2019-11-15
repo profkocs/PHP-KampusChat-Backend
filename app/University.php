@@ -10,15 +10,17 @@ use Illuminate\Database\Eloquent\Model;
 class University extends Model
 {
     //
-  
-   /**
-   * departments() -> Üniversiteye Ait Olan Tüm Bölümleri Getiren Fonksiyon
-   **/
+
+   protected $table = "universities";
 
    protected $fillable = [
        'id','name'
    ];
 
+
+   /**
+   * departments() -> Üniversiteye Ait Olan Tüm Bölümleri Getiren Fonksiyon
+   **/
 
     public function departments(){
 

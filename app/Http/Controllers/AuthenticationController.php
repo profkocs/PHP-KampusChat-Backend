@@ -303,10 +303,10 @@ class AuthenticationController extends BaseController{
 
   public function ekle(){
 
-    $input['name'] = "Selçuk Üniversitesi";
-    University::create($input);
-    $input['name'] = "Konya Teknik Üniversitesi";
-    University::create($input);
+
+    University::create(['name' => 'Konya Teknik Üniversitesi']);
+  //  $input['name'] = "Konya Teknik Üniversitesi";
+  //  University::create($input);
 
     $input['name'] = "Bilgisayar Mühendisliği";
     Department::create($input);
