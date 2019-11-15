@@ -305,11 +305,11 @@ class AuthenticationController extends BaseController{
 
 
     $input['name'] = "Selçuk Üniversitesi";
-    $input['email_type'] = "selcuk.edu.tr"
+    $input['email_type'] = "selcuk.edu.tr";
     University::create($input);
 
     $input['name'] = "Konya Teknik Üniversitesi";
-    $input['email_type'] = "ktun.edu.tr"
+    $input['email_type'] = "ktun.edu.tr";
     University::create($input);
 
 
