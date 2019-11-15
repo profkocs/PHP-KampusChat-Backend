@@ -8,7 +8,7 @@ class University extends Model
 {
     //
 protected $table = "universities";
-protected $fillable = ['id','name'];
+protected $fillable = ['id','name','email_type'];
 
 
     public function departments(){
