@@ -10,9 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class University extends Model
 {
     //
-    protected $timestamp = false;
-
-
+  
    /**
    * departments() -> Üniversiteye Ait Olan Tüm Bölümleri Getiren Fonksiyon
    **/
