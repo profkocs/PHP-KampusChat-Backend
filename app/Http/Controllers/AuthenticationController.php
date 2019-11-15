@@ -301,38 +301,6 @@ class AuthenticationController extends BaseController{
   }
 
 
-  public function ekle(){
-
-
-    $input['name'] = "Selçuk Üniversitesi";
-    $input['email_type'] = "selcuk.edu.tr";
-    University::create($input);
-
-    $input['name'] = "Konya Teknik Üniversitesi";
-    $input['email_type'] = "ktun.edu.tr";
-    University::create($input);
-
-
-    $input['name'] = "Bilgisayar Mühendisliği";
-    Department::create($input);
-    $input['name'] = "Edebiyat";
-    Department::create($input);
-
-    $input2['university_id'] = 1;
-    $input2['department_id'] = 1;
-    university_departments::create($input2);
-
-    $input2['university_id'] = 2;
-    $input2['department_id'] = 1;
-    university_departments::create($input2);
-
-    $input2['university_id'] = 1;
-    $input2['department_id'] = 2;
-    university_departments::create($input2);
-
-  }
-
-
   }
 
 ?>
