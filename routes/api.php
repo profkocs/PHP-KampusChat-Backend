@@ -25,14 +25,10 @@ Route::get('/user', function (Request $request) {return $request->user();});
 
 Route::get('/universities','EducationController@universities');
 Route::get('/departments/{id}','EducationController@departments');
-
 Route::post('/register','AuthenticationController@register');
 Route::post('/login','AuthenticationController@login');
-Route::get('/isEmailUsed/{email}','AuthenticationController@isEmailUsed');
-Route::get('/isUsernameUsed/{username}','AuthenticationController@isUsernameUsed');
-Route::get('/sendCode/{email}','AuthenticationController@sendCode');
 Route::post('/verifyCode','AuthenticationController@verifyCode');
-
+Route::get('/ekle','AuthenticationController@ekle');
 
 //Route::post('/updatePassword','AuthenticationController@updatePassword');
 //Route::get('/checkBannedList/{id}','AuthenticationController@checkBannedList');

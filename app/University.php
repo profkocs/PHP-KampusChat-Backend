@@ -17,6 +17,11 @@ class University extends Model
    * departments() -> Üniversiteye Ait Olan Tüm Bölümleri Getiren Fonksiyon
    **/
 
+   protected $fillable = [
+       'id','name'
+   ];
+
+
     public function departments(){
 
       return $this->belongsToMany('App\Department','university_departments','university_id','department_id');
