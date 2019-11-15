@@ -4,7 +4,7 @@ use App\User;
 use App\Code;
 use App\Department;
 use App\University;
-use App\university_departments;
+use App\University_departments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -304,9 +304,9 @@ class AuthenticationController extends BaseController{
   public function ekle(){
 
 
-  //  University::create(['name' => 'Konya Teknik Üniversitesi']);
-  //  $input['name'] = "Konya Teknik Üniversitesi";
-  //  University::create($input);
+    University::create(['name' => 'Konya Teknik Üniversitesi']);
+    $input['name'] = "Konya Teknik Üniversitesi";
+    University::create($input);
 
     $input['name'] = "Bilgisayar Mühendisliği";
     Department::create($input);
