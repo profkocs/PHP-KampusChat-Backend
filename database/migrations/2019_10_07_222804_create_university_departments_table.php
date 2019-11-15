@@ -18,6 +18,7 @@ class CreateUniversityDepartmentsTable extends Migration
             $table->bigInteger('university_id');
             $table->bigInteger('department_id');
             $table->unique(['university_id','department_id']);
+            $table->timestamps();
         });
     }
 
