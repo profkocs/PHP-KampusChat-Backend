@@ -87,6 +87,26 @@ class AuthenticationController extends BaseController{
   }
 
 
+  /**
+  * sendCode() -> Email Adresine Tek Kullanımlık Kod Gönderecek Fonksiyon
+  * @param $email -> Kod Gönderilecek ve Sistemde Kayıtlı Olan Email Adresi
+  **/
+
+  public function sendCode($email){
+
+    $code = str_random(6);
+    $to_name = 'User';
+    $data = array('name'=>"This code is for your verification.Please do not share this code with anyone.", 'body' => 'Your Verification Code: '.$code);
+
+    Mail::send('emails.mail', $data, function($message) use ($to_name,$email) {
+    $message->to($email, $to_name)
+    ->subject('KampusChat : Feel Unique');
+    $message->from('simpleappvision@gmail.com','KampusChat Verification Code');
+    });
+
+    Code::updateOrCreate(['email' => $email], ['code' => $code]);
+
+  }
 
 
   /**
@@ -198,33 +218,7 @@ class AuthenticationController extends BaseController{
   }
 
 
-  /**
-  * sendCode() -> Email Adresine Tek Kullanımlık Kod Gönderecek Fonksiyon
-  * @param $email -> Kod Gönderilecek ve Sistemde Kayıtlı Olan Email Adresi
-  **/
 
-  public function sendCode($email){
-
-    try{
-
-    $code = str_random(6);
-
-    $to_name = 'User';
-    $data = array('name'=>"This code is for your verification.Please do not share this code with anyone.", 'body' => 'Your Verification Code: '.$code);
-    Mail::send('emails.mail', $data, function($message) use ($to_name,$email) {
-    $message->to($email, $to_name)
-    ->subject('KampusChat : Feel Unique');
-    $message->from('simpleappvision@gmail.com','KampusChat Verification Code');
-    });
-
-    Code::updateOrCreate(['email' => $email], ['code' => $code]);
-    return true;
-  }
-  catch(\Exception $exception){
-      return false;
-  }
-
-  }
 
 
 /**

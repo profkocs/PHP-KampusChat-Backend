@@ -25,8 +25,8 @@ Route::get('/user', function (Request $request) {return $request->user();});
 
 Route::get('/universities','EducationController@universities');
 Route::get('/departments/{id}','EducationController@departments');
-Route::post('/register','AuthenticationController@register');
-Route::post('/login','AuthenticationController@login');
+Route::post('/register','RegisterController@register');
+Route::post('/login','LoginController@login');
 Route::post('/verifyCode','AuthenticationController@verifyCode');
 Route::get('/ekle','AuthenticationController@ekle');
 
