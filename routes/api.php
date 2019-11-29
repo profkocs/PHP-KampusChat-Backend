@@ -24,6 +24,11 @@ Route::group(['middleware' => ['auth:api']], function () {
         return $request->user();
     });
 
+    // Verify
+
+    Route::post('/verifyEmail','AuthenticationController@verifyEmail');
+
+
     // Event
     Route::post('/createEvent','EventController@createEvent');
     Route::put('/updateEvent','EventController@updateEvent');
