@@ -46,11 +46,10 @@ class AuthenticationController extends Controller {
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        $input['email_verified_at'] = Carbon::now();
         $user = User::create($input);
 
-       // $email_sender = new EmailSender();
-       // $email_sender->sendEmail(request('email'),"verification");
+        $email_sender = new EmailSender();
+        $email_sender->sendEmail(request('email'),"verification");
 
         $params = [
             'grant_type' => 'password',
@@ -167,7 +166,7 @@ class AuthenticationController extends Controller {
         $input = $request->all();
 
         if (Code::where('email', $input['email'])->where('code', $input['code'])->where('type',"verification")->where('revoked', false)->value('id')) {
-            User::where('email', $input['email'])->update(['email_verified_at' => date('YYYY-MM-DD HH:mm')]);
+            User::where('email', $input['email'])->update(['email_verified_at' => Carbon::now()]);
             Code::where('email', $input['email'])->where('code', $input['code'])->where('type',"verification")->update(['revoked' => true]);
             return response()->json("OK", 204);
         }else{
