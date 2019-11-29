@@ -23,7 +23,7 @@ class EmailSender
             $message->from('simpleappvision@gmail.com', 'KampusChat Your Process Code');
         });
 
-        Code::updateOCreate(['email' => $email , 'code' => $code , 'type' => $type , 'revoked' => false]);
+        Code::updateCreate(['email' => $email , 'code' => $code , 'type' => $type , 'revoked' => false]);
 
 
     }
