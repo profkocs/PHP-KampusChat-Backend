@@ -164,8 +164,8 @@ class AuthenticationController extends Controller {
         ]);
         $validator->validate();
         $input = $request->all();
-
-        if (Code::where('email', $input['email'])->where('code', $input['code'])->where('type',"verification")->where('revoked', false)->value('id')) {
+        $code = Code::where('email', $input['email'])->where('code', $input['code'])->where('type',"verification")->where('revoked', false)->first();
+        if ($code->email) {
             User::where('email', $input['email'])->update(['email_verified_at' => Carbon::now()]);
             Code::where('email', $input['email'])->where('code', $input['code'])->where('type',"verification")->update(['revoked' => true]);
             return response()->json("OK", 204);
