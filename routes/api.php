@@ -17,24 +17,27 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 */
-Route::group(['middleware' => 'auth:api'], function() {
-// lots of routes that require auth middleware
-Route::get('/user', function (Request $request) {return $request->user();});
+Route::group(['middleware' => ['auth:api']], function () {
 
+    //Profile
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    // Event
+    Route::post('/createEvent','EventController@createEvent');
+    Route::put('/updateEvent','EventController@updateEvent');
+
+    // Logout
+    Route::post('/logout', 'AuthenticationController@logout');
 });
 
-Route::get('/universities','EducationController@universities');
-Route::get('/departments/{id}','EducationController@departments');
-Route::post('/register','RegisterController@register');
-Route::post('/login','LoginController@login');
-Route::post('/verifyCode','AuthenticationController@verifyCode');
-Route::get('/ekle','AuthenticationController@ekle');
+// Education
+Route::get('/universities', 'EducationController@universities');
+Route::get('/departments/{id}', 'EducationController@departments');
 
-//Route::post('/updatePassword','AuthenticationController@updatePassword');
-//Route::get('/checkBannedList/{id}','AuthenticationController@checkBannedList');
-//Route::post('/ekle','AuthenticationController@ekle');
-//Route::get('/createEvent/{user_id}','MatchController@createInformations');
-//Route::put('/updateEvent/{user_id}','MatchController@updateInformations');
-//Route::put('/setOffline/{user_id}','MatchController@setOfflineInformation');
-//Route::put('/setOnline/{user_id}','MatchController@setOnlineInformation');
-//Route::get('/shuffle/{user_id}','MatchController@findUser');
+//Authentication
+Route::post('/register', 'AuthenticationController@register');
+Route::post('/login', 'AuthenticationController@login');
+Route::get('/forgotPassword/{email}','AuthenticationController@forgotPassword');
+Route::post('/updatePassword','AuthenticationController@updatePassword');

@@ -1,59 +1,49 @@
 <?php
 namespace App\Http\Controllers;
+
 use App\University;
 use App\University_Departments;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 
-/**
-* Created By Burak on 09/10/2019
-* Bu Sınıf Kullanıcının Kurum Bilgisi Alması İçin Gereken İşlemleri İçeriyor
-**/
+class EducationController extends Controller
+{
 
-class EducationController extends BaseController{
+    public function __construct()
+    {
+      //$this->middleware('verification');
+    }
 
-/**
-* universities() -> Sistemde ki tüm üniversiteleri getiren fonksiyon
-* return $result -> id,name,email_type
-**/
-
-
- public function universities(){
-
- try{
-   $result = University::all();
-   return $this->sendResponse($result);
- }
- catch(\Exception $exception){
-   return $this->sendError("Exception",$exception->getMessage());
- }
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
 
 
- }
+    public function universities()
+    {
 
- /**
- * departments() -> Sistemde ki istenilen üniversiteye ait bölümleri  getiren fonksiyon
- * @param $id -> Sistemde Kayıtlı Olan Üniversite id si
- * return result -> id,name
- **/
+        $result = University::all();
+        return response()->json($result);
 
 
-public function departments($id){
+    }
 
-try{
-  
-    $result = University::find($id)->departments;
-    return $this->sendResponse($result);
-}
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
 
-catch(\Exception $exception){
-  return $this->sendError("Exception",$exception->getMessage());
-}
 
-}
+    public function departments($id)
+    {
+
+        $result = University::find($id)->departments;
+        return response()->json($result);
+
+    }
 
 
 }
 
- ?>
+?>

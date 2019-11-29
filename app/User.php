@@ -6,7 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, Notifiable;
 
@@ -18,7 +18,7 @@ class User extends Authenticatable
 
 
     protected $fillable = [
-        'fullname', 'email', 'password','department_id','username','gender','date_of_birth','is_verified'
+        'fullname', 'email', 'password','department_id','username','gender','date_of_birth','email_verified_at'
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -29,14 +29,15 @@ class User extends Authenticatable
         'password'
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function findForPassport($username)
+    {
+        if(strpos($username,"hotmail.com",0)){
+            // email
+            return $this->where('email', $username)->first();
+        }
+
+        return $this->where('username', $username)->first();
+    }
 
 
 }

@@ -17,6 +17,8 @@ class CreateCodeTable extends Migration
             $table->bigIncrements('id');
             $table->string('email')->unique();
             $table->string('code');
+            $table->string('type');
+            $table->boolean('revoked');
             $table->timestamps();
         });
     }
