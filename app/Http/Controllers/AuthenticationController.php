@@ -49,7 +49,7 @@ class AuthenticationController extends Controller {
         $user = User::create($input);
 
         $email_sender = new EmailSender();
-        $email_sender->sendEmail(request('email'),"verification");
+        $email_sender->sendEmail(request('email'),'verification');
 
         $params = [
             'grant_type' => 'password',

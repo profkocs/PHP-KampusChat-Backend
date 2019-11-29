@@ -10,7 +10,7 @@ class Code extends Model
     //
 
     protected $fillable = [
-        'email', 'code', 'revoked','type'
+        'email', 'code', 'type', 'revoked'
     ];
 
 }
