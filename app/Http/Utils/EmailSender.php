@@ -17,7 +17,7 @@ class EmailSender
         $to_name = 'User';
         $data = array('name' => "This code is for your process.Please do not share this code with anyone.", 'body' => 'Your Code: ' . $code);
 
-        Mail::send('email.mail', $data, function ($message) use ($to_name, $email) {
+        Mail::send('emails.mail', $data, function ($message) use ($to_name, $email) {
             $message->to($email, $to_name)
                 ->subject('KampusChat : Feel Unique');
             $message->from('simpleappvision@gmail.com', 'KampusChat Your Process Code');
