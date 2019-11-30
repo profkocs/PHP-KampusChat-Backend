@@ -15,7 +15,7 @@ class CreateCodeTable extends Migration
     {
         Schema::create('codes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('code');
             $table->string('type');
             $table->boolean('revoked');

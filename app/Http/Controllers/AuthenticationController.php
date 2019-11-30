@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+
 use App\Http\Utils\EmailSender;
 use App\User;
 use App\Code;
@@ -11,7 +12,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Passport\Client;
 
-class AuthenticationController extends Controller {
+class AuthenticationController extends Controller
+{
 
 
     private $client;
@@ -46,10 +48,10 @@ class AuthenticationController extends Controller {
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        $user = User::create($input);
+        User::create($input);
 
         $email_sender = new EmailSender();
-        $email_sender->sendEmail(request('email'),'verification');
+        $email_sender->sendEmail(request('email'), 'verification');
 
         $params = [
             'grant_type' => 'password',
@@ -81,14 +83,13 @@ class AuthenticationController extends Controller {
             'username' => 'required',
         ]);
         $validator->validate();
-        $input = $request->all();
 
         $params = [
             'grant_type' => 'password',
             'client_id' => $this->client->id,
             'client_secret' => $this->client->secret,
-            'username' => $input['username'],
-            'password' => $input['password'],
+            'username' => request('username'),
+            'password' => request('password'),
             'scope' => '*'
         ];
 
@@ -122,7 +123,7 @@ class AuthenticationController extends Controller {
     public function forgotPassword($email)
     {
         $email_sender = new EmailSender();
-        $email_sender->sendEmail($email,"reset_password");
+        $email_sender->sendEmail($email, "reset_password");
         return response()->json("OK", 204);
     }
 
@@ -139,16 +140,14 @@ class AuthenticationController extends Controller {
             'password' => 'required'
         ]);
         $validator->validate();
-        $input = $request->all();
 
-        if (Code::where('email', $input['email'])->where('code', $input['code'])->where('type','reset_password')->whereDay('updated_at', '=', date('d'))->where('revoked', false)->value('id')) {
-            User::where('email', $input['email'])->update(['password' => bcrypt($input['password'])]);
-            Code::where('email', $input['email'])->where('code', $input['code'])->where('type','reset_password')->whereDay('updated_at', '=', date('d'))->update(['revoked' => true]);
+        if (Code::where('email', request('email'))->where('code', request('code'))->where('type', 'reset_password')->whereDay('updated_at', '=', date('d'))->where('revoked', false)->update(['revoked' => true])) {
+            User::where('email', request('email'))->update(['password' => bcrypt(request('password'))]);
             return response()->json("OK", 204);
 
-        } else {
-            return response()->json(['message' => 'Code was invalid'], 401);
         }
+        return response()->json(['message' => 'Code was invalid'], 401);
+
     }
 
     /**
@@ -156,28 +155,25 @@ class AuthenticationController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function verifyEmail(Request $request){
+    public function verifyEmail(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             'code' => 'required',
             'email' => 'required',
         ]);
         $validator->validate();
-        $input = $request->all();
 
-        if (Code::where('email', $input['email'])->where('code', $input['code'])->where('type',"verification")->where('revoked', false)->value('id')) {
-            User::where('email', $input['email'])->update(['email_verified_at' => Carbon::now()]);
-            Code::where('email', $input['email'])->where('code', $input['code'])->where('type',"verification")->update(['revoked' => true]);
+        if (Code::where('email', request('email'))->where('code', request('code'))->where('type', "verification")->where('revoked', false)->update(['revoked' => true])) {
+            User::where('email', request('email'))->update(['email_verified_at' => Carbon::now()]);
             return response()->json("OK", 204);
-        }else{
-            return response()->json(['message' => 'Code was invalid'], 401);
         }
+        return response()->json(['message' => 'Code was invalid'], 401);
 
 
     }
 
 
-
-  }
+}
 
 ?>

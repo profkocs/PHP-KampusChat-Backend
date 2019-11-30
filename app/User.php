@@ -31,11 +31,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function findForPassport($username)
     {
-        if(strpos($username,"hotmail.com",0)){
-            // email
+
+        if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
             return $this->where('email', $username)->first();
         }
-
         return $this->where('username', $username)->first();
     }
 
