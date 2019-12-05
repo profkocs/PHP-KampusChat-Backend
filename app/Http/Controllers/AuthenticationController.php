@@ -122,9 +122,15 @@ class AuthenticationController extends Controller
 
     public function forgotPassword($email)
     {
-        $email_sender = new EmailSender();
-        $email_sender->sendEmail($email, "reset_password");
-        return response()->json("OK", 204);
+ 
+        if(User::where('email',$email)->first()){
+            $email_sender = new EmailSender();
+            $email_sender->sendEmail($email, "reset_password");
+            return response()->json("OK", 204);
+        }
+        
+        return response()->json(["email" => 'Email is not found'],401);
+        
     }
 
     /**
@@ -146,7 +152,7 @@ class AuthenticationController extends Controller
             return response()->json("OK", 204);
 
         }
-        return response()->json(['message' => 'Code was invalid'], 401);
+        return response()->json(['code' => 'Code was invalid'], 401);
 
     }
 
@@ -168,7 +174,7 @@ class AuthenticationController extends Controller
             User::where('email', request('email'))->update(['email_verified_at' => Carbon::now()]);
             return response()->json("OK", 204);
         }
-        return response()->json(['message' => 'Code was invalid'], 401);
+        return response()->json(['code' => 'Code was invalid'], 401);
 
 
     }
