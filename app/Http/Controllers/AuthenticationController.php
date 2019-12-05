@@ -122,15 +122,16 @@ class AuthenticationController extends Controller
 
     public function forgotPassword($email)
     {
- 
-        if(User::where('email',$email)->first()){
-            $email_sender = new EmailSender();
-            $email_sender->sendEmail($email, "reset_password");
-            return response()->json("OK", 204);
+
+        try{
+            if(User::where('email',$email)->first()){
+                $email_sender = new EmailSender();
+                $email_sender->sendEmail($email, "reset_password");
+            }
+        }catch(Exception $exception ){
+            return response()->json(["email" => 'Email is not found'],401);
         }
-        
-        return response()->json(["email" => 'Email is not found'],401);
-        
+        return response()->json("OK", 204);
     }
 
     /**
