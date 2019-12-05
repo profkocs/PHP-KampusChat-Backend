@@ -124,14 +124,15 @@ class AuthenticationController extends Controller
     {
 
         try{
-            if(User::where('email',$email)->first()){
+            if(User::where('email',$email)->firstOrFail()){
                 $email_sender = new EmailSender();
                 $email_sender->sendEmail($email, "reset_password");
+                return response()->json("OK", 204);
             }
-        }catch(Exception $exception ){
+        }catch(Exception $exception){
             return response()->json(["email" => 'Email is not found'],401);
         }
-        return response()->json("OK", 204);
+        
     }
 
     /**
