@@ -123,15 +123,13 @@ class AuthenticationController extends Controller
     public function forgotPassword($email)
     {
 
-        try{
+        
             if(User::where('email',$email)->firstOrFail()){
                 $email_sender = new EmailSender();
                 $email_sender->sendEmail($email, "reset_password");
                 return response()->json("OK", 204);
             }
-        }catch(Exception $exception){
-            return response()->json(["email" => 'Email is not found'],401);
-        }
+        
         
     }
 
@@ -149,7 +147,10 @@ class AuthenticationController extends Controller
         ]);
         $validator->validate();
 
-        if (Code::where('email', request('email'))->where('code', request('code'))->where('type', 'reset_password')->whereDay('updated_at', '=', date('d'))->where('revoked', false)->update(['revoked' => true])) {
+        $code = Code::where('email', request('email'))->where('code', request('code'))->where('type', 'reset_password')->whereDay('updated_at', '=', date('d'))->where('revoked', false)->firstOrFail();
+        if ($code) {
+            $code->revoked = true;
+            $code->save();
             User::where('email', request('email'))->update(['password' => bcrypt(request('password'))]);
             return response()->json("OK", 204);
 
