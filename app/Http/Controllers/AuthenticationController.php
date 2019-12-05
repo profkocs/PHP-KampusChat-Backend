@@ -153,9 +153,7 @@ class AuthenticationController extends Controller
             $code->save();
             User::where('email', request('email'))->update(['password' => bcrypt(request('password'))]);
             return response()->json("OK", 204);
-
         }
-        return response()->json(['code' => 'Code was invalid'], 401);
 
     }
 
@@ -173,13 +171,14 @@ class AuthenticationController extends Controller
         ]);
         $validator->validate();
 
-        if (Code::where('email', request('email'))->where('code', request('code'))->where('type', "verification")->where('revoked', false)->update(['revoked' => true])) {
+        $code = Code::where('email', request('email'))->where('code', request('code'))->where('type', "verification")->where('revoked', false)->firstOrFail();
+        if ($code) {
+            $code->revoked = true;
+            $code->save();
             User::where('email', request('email'))->update(['email_verified_at' => Carbon::now()]);
             return response()->json("OK", 204);
         }
-        return response()->json(['code' => 'Code was invalid'], 401);
-
-
+        
     }
 
 
