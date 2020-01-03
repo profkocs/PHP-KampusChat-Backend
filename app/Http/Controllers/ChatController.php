@@ -30,7 +30,7 @@ class ChatController extends Controller
             $did_user_ban_me = Ban::where('user_id', $other_user_id)->where('banned_user_id', $user_id)->first();
             $did_i_ban_user = Ban::where('user_id', $user_id)->where('banned_user_id', $other_user_id)->first();
             $did_user_like_me = Like::where('user_id', $other_user_id)->where('liked_user_id', $user_id)->first();
-            $did_i_liked_user = Like::where('user_id', user_id)->where('liked_user_id', $other_user_id)->first();
+            $did_i_liked_user = Like::where('user_id', $user_id)->where('liked_user_id', $other_user_id)->first();
             $input = $users[$other_user_id];
 
             $input['banned_me'] = ($did_user_ban_me) ? true : false;
