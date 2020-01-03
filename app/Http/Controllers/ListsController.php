@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Ban;
+use App\Like;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use Zend\Diactoros\Request;
@@ -98,6 +100,19 @@ class ListsController extends Controller
         $input = $request->all();
 
         Ban::create($input);
+
+
+    }
+
+    public function removeBan(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'banned_user_id' => 'required',
+
+        ]);
+        $validator->validate();
+
+        Ban::where('user_id',request('user_id'))->where('banned_user_id',request('banned_user_id'))->delete();
 
 
     }

@@ -34,22 +34,29 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::put('/setOffline','EventController@setOffline');
 
 
-    // Upload Profile Photo
+    // Upload Profile Photo and  Edit Profile
+    Route::post('/updatePhoto','ProfileController@updateProfilePhoto');
+    Route::put('/updateProfile','ProfileController@updateProfile');
 
-    // Edit Profile
 
     // Shuffle
-
     Route::get('/shuffle/{user_id}','ShuffleController@shuffle');
 
 
-    // Lists
+    // Like
+    Route::post('/likeUser','ListsController@likeUser');
+    Route::get('/getLikedUsers/{user_id}','ListsController@getLikedUsers');
 
     // Ban and Remove Ban
 
-    // Like
+    Route::post('/banUser','ListsController@banUser');
+    Route::get('/getBannedUsers/{user_id}','ListsController@getBannedUsers');
+    Route::post('/removeBan','ListsController@removeBan');
+
 
     // Chat
+    Route::post('/addChat','ChatController@addChat');
+    Route::get('/getChats/{user_id}','ChatController@getChats');
 
 
     // Logout

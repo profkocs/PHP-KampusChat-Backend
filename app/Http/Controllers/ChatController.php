@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Zend\Diactoros\Request;
+
 class ChatController extends Controller
 {
 
@@ -41,6 +43,12 @@ class ChatController extends Controller
 
 
     }
+
+    public function addChat(Request $request){
+
+
+    }
+
 
 
 }

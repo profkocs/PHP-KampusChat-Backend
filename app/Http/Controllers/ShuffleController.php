@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Chat;
+use App\Event;
+use App\User;
+
 class ShuffleController extends Controller
 {
 
@@ -14,19 +18,21 @@ class ShuffleController extends Controller
             $event = Event::where("group", "=", 0)->where("user_id", ">", $last_user_id)->first();
 
             if ($event) {
-                $last_user_id = $event->user_id;
 
-                $is_matched_before = Chat::where('owner_user_id', $user_id)->where('guest_user_id', $last_user_id)->orWhere('owner_user_id', $last_user_id)->where('guest_user_id', $user_id)->first();
+                if($user_id != $event->user_id){
+                    $last_user_id = $event->user_id;
 
-                if (!$is_matched_before) {
+                    $is_matched_before = Chat::where('owner_user_id', $user_id)->where('guest_user_id', $last_user_id)->orWhere('owner_user_id', $last_user_id)->where('guest_user_id', $user_id)->first();
 
-                    $user = User::find($last_user_id)->first();
+                    if (!$is_matched_before) {
 
-                    return response()->json($user, 200);
+                        $user = User::find($last_user_id)->first();
+
+                        return response()->json($user, 200);
 
 
+                    }
                 }
-
             } else {
                 return response()->json("No Content", 200);
             }
