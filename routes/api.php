@@ -27,10 +27,30 @@ Route::group(['middleware' => ['auth:api']], function () {
     // Verify
     Route::post('/verifyEmail','AuthenticationController@verifyEmail');
 
-
     // Event
     Route::post('/createEvent','EventController@createEvent');
     Route::put('/updateEvent','EventController@updateEvent');
+    Route::put('/setOnline','EventController@setOnline');
+    Route::put('/setOffline','EventController@setOffline');
+
+
+    // Upload Profile Photo
+
+    // Edit Profile
+
+    // Shuffle
+
+    Route::get('/shuffle/{user_id}','ShuffleController@shuffle');
+
+
+    // Lists
+
+    // Ban and Remove Ban
+
+    // Like
+
+    // Chat
+
 
     // Logout
     Route::post('/logout', 'AuthenticationController@logout');
