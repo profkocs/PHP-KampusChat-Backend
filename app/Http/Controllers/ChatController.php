@@ -40,7 +40,7 @@ class ChatController extends Controller
 
         }
 
-        if ($my_chats->count() > 0) {
+        if (count($my_chats) > 0) {
             return response()->json($input);
         }
 

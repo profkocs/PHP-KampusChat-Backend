@@ -57,7 +57,7 @@ class ListsController extends Controller
 
         }
 
-        if ($users->count() > 0) {
+        if (count($users) > 0) {
 
             return response()->json($users, 200);
         }
@@ -79,7 +79,7 @@ class ListsController extends Controller
 
         }
 
-        if ($users->count() > 0) {
+        if (count($users) > 0) {
 
             return response()->json($users, 200);
         }
