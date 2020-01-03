@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Ban;
+use App\Chat;
+use App\Like;
+use App\User;
 use Zend\Diactoros\Request;
 
 class ChatController extends Controller
