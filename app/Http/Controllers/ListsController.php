@@ -12,8 +12,8 @@ class ListsController extends Controller
 {
 
 
-
-    public function likeUser(Request $request){
+    public function likeUser(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             'user_id' => 'required',
@@ -28,6 +28,8 @@ class ListsController extends Controller
 
         Like::create($input);
 
+        return response()->json("OK", 204);
+
 
     }
 
@@ -35,7 +37,7 @@ class ListsController extends Controller
     {
 
         $users = array();
-        $my_likes = Like::where('user_id', $user_id)->all();
+        $my_likes = Like::where('user_id', $user_id)->get();
         foreach ($my_likes as $like) {
 
             $did_user_like_me = Like::where('user_id', $like->liked_user_id)->where('liked_user_id', $user_id)->first();
@@ -60,16 +62,17 @@ class ListsController extends Controller
             return response()->json($users, 200);
         }
 
-        return response()->json("No Content", 200);
+        return response()->json(["message" => "No Content"], 200);
 
     }
 
 
-    public function getBannedUsers($user_id){
+    public function getBannedUsers($user_id)
+    {
 
         $users = array();
-        $my_bans = Ban::where('user_id',$user_id)->first();
-        foreach ($my_bans as $ban){
+        $my_bans = Ban::where('user_id', $user_id)->get();
+        foreach ($my_bans as $ban) {
 
 
             $users[$ban->banned_user_id] = User::find($ban->banned_user_id)->first();
@@ -81,13 +84,13 @@ class ListsController extends Controller
             return response()->json($users, 200);
         }
 
-        return response()->json("No Content", 200);
-
+        return response()->json(["message" => "No Content"], 200);
 
 
     }
 
-    public function banUser(Request $request){
+    public function banUser(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             'user_id' => 'required',
@@ -100,11 +103,12 @@ class ListsController extends Controller
         $input = $request->all();
 
         Ban::create($input);
-
+        return response()->json("OK", 204);
 
     }
 
-    public function removeBan(Request $request){
+    public function removeBan(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required',
             'banned_user_id' => 'required',
@@ -112,14 +116,10 @@ class ListsController extends Controller
         ]);
         $validator->validate();
 
-        Ban::where('user_id',request('user_id'))->where('banned_user_id',request('banned_user_id'))->delete();
-
+        Ban::where('user_id', request('user_id'))->where('banned_user_id', request('banned_user_id'))->delete();
+        return response()->json("OK", 204);
 
     }
-
-
-
-
 
 
 }

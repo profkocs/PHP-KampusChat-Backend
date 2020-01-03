@@ -34,13 +34,13 @@ class ShuffleController extends Controller
                     }
                 }
             } else {
-                return response()->json("No Content", 200);
+                return response()->json(["message" => "No Content"], 200);
             }
 
             $count++;
         }
 
-        return response()->json("No Content", 200);
+        return response()->json(["message" => "No Content"], 200);
 
 
     }

@@ -6,6 +6,7 @@ use App\Ban;
 use App\Chat;
 use App\Like;
 use App\User;
+use Illuminate\Support\Facades\Validator;
 use Zend\Diactoros\Request;
 
 class ChatController extends Controller
@@ -17,7 +18,7 @@ class ChatController extends Controller
 
         $input = null;
         $users = array();
-        $my_chats = Chat::where('owner_user_id', $user_id)->orWhere('guest_user_id', $user_id)->all();
+        $my_chats = Chat::where('owner_user_id', $user_id)->orWhere('guest_user_id', $user_id)->get();
 
 
         foreach ($my_chats as $chat) {
@@ -43,16 +44,28 @@ class ChatController extends Controller
             return response()->json($input);
         }
 
-        return response()->json("No Content", 204);
+        return response()->json(["message" => "No Content"], 200);
 
 
     }
 
-    public function addChat(Request $request){
+    public function addChat(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'owner_user_id' => 'required',
+            'guest_user_id' => 'required',
 
 
+        ]);
+
+        $validator->validate();
+
+        $input = $request->all();
+        Chat::create($input);
+
+        return response()->json("OK",204);
     }
-
 
 
 }
