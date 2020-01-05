@@ -17,6 +17,7 @@ class CreateChatsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('owner_user_id');
             $table->bigInteger('guest_user_id');
+            $table->boolean('is_checked')->default(false);
             $table->timestamps();
         });
     }

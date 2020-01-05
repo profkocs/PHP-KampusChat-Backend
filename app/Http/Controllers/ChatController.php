@@ -33,8 +33,8 @@ class ChatController extends Controller
             $did_i_liked_user = Like::where('user_id', $user_id)->where('liked_user_id', $other_user_id)->first();
             $input = $users[$other_user_id];
 
-            $input['banned_me'] = ($did_user_ban_me) ? true : false;
-            $input['banned_user'] = ($did_i_ban_user) ? true : false;
+            $input['did_user_banned_me'] = ($did_user_ban_me) ? true : false;
+            $input['did_i_banned_user'] = ($did_i_ban_user) ? true : false;
             $input['liked_each_other'] = ($did_i_liked_user && $did_user_like_me) ? true : false;
             $users[$other_user_id] = $input;
 
@@ -44,7 +44,7 @@ class ChatController extends Controller
             return response()->json($input);
         }
 
-        return response()->json(["message" => "No Content"], 200);
+        return response()->json(["message" => "No Content"], 204);
 
 
     }

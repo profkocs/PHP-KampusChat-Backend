@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Ban;
 use App\Like;
 use App\User;
+use http\Env\Response;
 use Illuminate\Support\Facades\Validator;
 use Zend\Diactoros\Request;
 
@@ -27,6 +28,11 @@ class ListsController extends Controller
         $input = $request->all();
 
         Like::create($input);
+        $did_user_like_me = Like::where('user_id', request('liked_user_id'))->where('liked_user_id', request('user_id'))->first();
+
+        if ($did_user_like_me) {
+            return response()->json("OK", 200);
+        }
 
         return response()->json("OK", 204);
 
@@ -62,7 +68,7 @@ class ListsController extends Controller
             return response()->json($users, 200);
         }
 
-        return response()->json(["message" => "No Content"], 200);
+        return response()->json(["message" => "No Content"], 204);
 
     }
 
@@ -84,7 +90,7 @@ class ListsController extends Controller
             return response()->json($users, 200);
         }
 
-        return response()->json(["message" => "No Content"], 200);
+        return response()->json(["message" => "No Content"], 204);
 
 
     }

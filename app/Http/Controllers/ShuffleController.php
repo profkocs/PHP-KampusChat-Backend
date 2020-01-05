@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Chat;
+use App\Department;
 use App\Event;
 use App\User;
 
@@ -12,6 +13,20 @@ class ShuffleController extends Controller
     public function shuffle($user_id)
     {
 
+
+        $amIAlreadyMatched = Chat::where('guest_user_id', $user_id)->where('is_checked', false)->first();
+
+        if ($amIAlreadyMatched) {
+
+            $user = User::find($amIAlreadyMatched->owner_user_id)->first();
+            $department = Department::where("id", $user->deparment_id)->first();
+            $user['department_name'] = $department->name;
+            Chat::where('id', $amIAlreadyMatched->id)->update(['is_checked', true]);
+            return response()->json($user, 200);
+
+        }
+
+        // else
         $count = 0;
         $last_user_id = -1;
         while ($count < 1000) {
@@ -19,7 +34,7 @@ class ShuffleController extends Controller
 
             if ($event) {
 
-                if($user_id != $event->user_id){
+                if ($user_id != $event->user_id) {
                     $last_user_id = $event->user_id;
 
                     $is_matched_before = Chat::where('owner_user_id', $user_id)->where('guest_user_id', $last_user_id)->orWhere('owner_user_id', $last_user_id)->where('guest_user_id', $user_id)->first();
@@ -28,19 +43,22 @@ class ShuffleController extends Controller
 
                         $user = User::find($last_user_id)->first();
 
+                        $department = Department::where("id", $user->deparment_id)->first();
+                        $user['department_name'] = $department->name;
+
                         return response()->json($user, 200);
 
 
                     }
                 }
             } else {
-                return response()->json(["message" => "No Content"], 200);
+                return response()->json(["message" => "No Content"], 204);
             }
 
             $count++;
         }
 
-        return response()->json(["message" => "No Content"], 200);
+        return response()->json(["message" => "No Content"], 204);
 
 
     }

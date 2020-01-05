@@ -15,10 +15,10 @@ class ProfileController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'user_id' => 'required'
         ]);
+        $url = request('user_id') . '_image' . time() . '.' . request()->image->getClientOriginalExtension();
+        request()->image->storeAs(public_path('images'), $url);
 
-        request()->image->move(public_path('images'), request('user_id'));
-
-        return response()->json(['url' => public_path('images') . '/' . request('user_id')]);
+        return response()->json(['url' => $url]);
 
     }
 

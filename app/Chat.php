@@ -9,7 +9,7 @@ class Chat extends Model
     //
     protected $fillable =
         [
-            'owner_user_id', 'guest_user_id'
+            'id' ,'owner_user_id', 'guest_user_id' ,'is_checked'
         ];
 
 }
