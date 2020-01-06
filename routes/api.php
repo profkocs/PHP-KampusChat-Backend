@@ -28,7 +28,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('/verifyEmail','AuthenticationController@verifyEmail');
 
     // Event
-    Route::post('/createEvent','EventController@createEvent');
+   // Route::post('/createEvent','EventController@createEvent');
     Route::put('/updateEvent','EventController@updateEvent');
     Route::put('/setOnline','EventController@setOnline');
     Route::put('/setOffline','EventController@setOffline');

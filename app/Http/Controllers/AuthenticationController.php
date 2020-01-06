@@ -48,10 +48,17 @@ class AuthenticationController extends Controller
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        User::create($input);
+        $user = User::create($input);
 
         $email_sender = new EmailSender();
         $email_sender->sendEmail(request('email'), 'verification');
+
+        // default degerler
+        $event['user_id'] = $user->id;
+        $event['group'] = 0;
+        $event['is_online'] = false;
+
+        Event::create($input);
 
         $params = [
             'grant_type' => 'password',
@@ -123,14 +130,14 @@ class AuthenticationController extends Controller
     public function forgotPassword($email)
     {
 
-        
+
             if(User::where('email',$email)->firstOrFail()){
                 $email_sender = new EmailSender();
                 $email_sender->sendEmail($email, "reset_password");
                 return response()->json("OK", 204);
             }
-        
-        
+
+
     }
 
     /**
@@ -178,7 +185,7 @@ class AuthenticationController extends Controller
             User::where('email', request('email'))->update(['email_verified_at' => Carbon::now()]);
             return response()->json("OK", 204);
         }
-        
+
     }
 
 

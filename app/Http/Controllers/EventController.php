@@ -15,7 +15,7 @@ class EventController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-
+/*
     public function createEvent(Request $request)
     {
 
@@ -36,7 +36,7 @@ class EventController extends Controller
 
 
     }
-
+*/
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
