@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Event;
 use App\Http\Utils\EmailSender;
 use App\User;
 use App\Code;
