@@ -49,12 +49,12 @@ class AuthenticationController extends Controller
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        $user = User::create($input)->get();
+        $user_id = User::create($input)->id;
 
         $email_sender = new EmailSender();
         $email_sender->sendEmail(request('email'), 'verification');
 
-        Event::create(["user_id" => $user['id'],"group" => 0 , "is_online" => false]);
+        Event::create(["user_id" => $user_id,"group" => 0 , "is_online" => false]);
 
         $params = [
             'grant_type' => 'password',
