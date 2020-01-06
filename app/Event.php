@@ -10,7 +10,7 @@ class Event extends Model
     protected $table = "events";
 
     protected $fillable = [
-        'user_id','group','shuffle_count','is_online'
+        'user_id','group','is_online'
     ];
 
 }
