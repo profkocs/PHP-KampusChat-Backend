@@ -57,7 +57,7 @@ class EventController extends Controller
         $event = Event::where('user_id', $user->id)->first();
 
         // 1 day passed
-        if (date_format($event->last_seen_at, 'd') != date('d')) {
+        if ($event->last_seen_at->format('d') != date('d')) {
             $event->group = 0;
         }
         $event->last_seen_at = Carbon::now();
