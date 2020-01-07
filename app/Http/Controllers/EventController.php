@@ -16,28 +16,28 @@ class EventController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-/*
-    public function createEvent(Request $request)
-    {
+    /*
+        public function createEvent(Request $request)
+        {
 
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'required',
-        ]);
+            $validator = Validator::make($request->all(), [
+                'user_id' => 'required',
+            ]);
 
-        $validator->validate();
+            $validator->validate();
 
-        // default degerler
-        $input['user_id'] = request('user_id');
-        $input['group'] = 0;
-        $input['is_online'] = true;
+            // default degerler
+            $input['user_id'] = request('user_id');
+            $input['group'] = 0;
+            $input['is_online'] = true;
 
-        $event = Event::create($input);
+            $event = Event::create($input);
 
-        return response()->json($event, 200);
+            return response()->json($event, 200);
 
 
-    }
-*/
+        }
+    */
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -52,12 +52,13 @@ class EventController extends Controller
         ]);
         $validator->validate();
 
-        $user = User::where('email',request('email'))->first();
+        $user = User::where('email', request('email'))->first();
 
         $event = Event::where('user_id', $user->id)->first();
 
+        $day = date('d', strtotime($event->last_seen_at));
         // 1 day passed
-        if ($event->last_seen_at->format('d') != date('d')) {
+        if ($day != date('d')) {
             $event->group = 0;
         }
         $event->last_seen_at = Carbon::now();
@@ -100,9 +101,6 @@ class EventController extends Controller
         User::find(request('user_id'))->update(['is_online' => false]);
         return response()->json("OK", 204);
     }
-
-
-
 
 
 }
