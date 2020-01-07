@@ -98,7 +98,7 @@ class EventController extends Controller
         ]);
         $validator->validate();
 
-        User::where('user_id',request('user_id'))->update(['is_online' => false]);
+        Event::where('user_id',request('user_id'))->update(['is_online' => false]);
         return response()->json("OK", 204);
     }
 
