@@ -14,7 +14,7 @@ class ShuffleController extends Controller
     {
 
 
-        $amIAlreadyMatched = Chat::where('guest_user_id', $user_id)->where('is_checked', false)->first();
+        $amIAlreadyMatched = Chat::where('guest_user_id', $user_id)->where('is_checked', false)->get();
 
         if ($amIAlreadyMatched) {
 
