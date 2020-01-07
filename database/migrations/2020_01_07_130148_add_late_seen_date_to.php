@@ -15,7 +15,7 @@ class AddLateSeenDateTo extends Migration
     {
         Schema::table('events', function (Blueprint $table) {
             //
-            $table->timestamp("last_seen_at");
+            $table->timestamp("last_seen_at")->nullable();
         });
     }
 
