@@ -52,17 +52,15 @@ class EventController extends Controller
         ]);
         $validator->validate();
 
-
         $user = User::where('email',request('email'))->first();
-
 
         $event = Event::where('user_id', $user->id)->first();
 
         // 1 day passed
-        if (date_format($event->updated_at, 'd') != date('d')) {
+        if (date_format($event->last_seen_at, 'd') != date('d')) {
             $event->group = 0;
-            $event->updated_at = Carbon::now();
         }
+        $event->last_seen_at = Carbon::now();
         $event->is_online = true;
         $event->save();
 

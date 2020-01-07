@@ -54,7 +54,7 @@ class AuthenticationController extends Controller
         $email_sender = new EmailSender();
         $email_sender->sendEmail(request('email'), 'verification');
 
-        Event::create(["user_id" => $user_id,"group" => 0 , "is_online" => false]);
+        Event::create(["user_id" => $user_id,"group" => 0 , "is_online" => false , "last_seen_at" => Carbon::now()]);
 
         $params = [
             'grant_type' => 'password',
