@@ -18,6 +18,7 @@ class CreateEventsTable extends Migration
             $table->bigInteger('user_id');
             $table->boolean('is_online');
             $table->integer('group');
+            $table->timestamp('last_seen_at');
             $table->timestamps();
         });
     }
