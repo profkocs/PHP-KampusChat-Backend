@@ -82,7 +82,7 @@ class EventController extends Controller
         ]);
         $validator->validate();
 
-        User::find(request('user_id'))->update(['is_online' => true]);
+        Event::where('user_id',request('user_id'))->update(['is_online' => true]);
         return response()->json("OK", 204);
     }
 
@@ -98,7 +98,7 @@ class EventController extends Controller
         ]);
         $validator->validate();
 
-        User::find(request('user_id'))->update(['is_online' => false]);
+        User::where('user_id',request('user_id'))->update(['is_online' => false]);
         return response()->json("OK", 204);
     }
 
