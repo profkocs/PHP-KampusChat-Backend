@@ -33,9 +33,9 @@ class ShuffleController extends Controller
             $event = Event::where("group", "<=", 5)->where("user_id", ">", $last_user_id)->first();
 
             if ($event) {
-
+                $last_user_id = $event->user_id;
                 if ($user_id != $event->user_id) {
-                    $last_user_id = $event->user_id;
+
 
                     $is_matched_before = Chat::where('owner_user_id', $user_id)->where('guest_user_id', $last_user_id)->orWhere('owner_user_id', $last_user_id)->where('guest_user_id', $user_id)->first();
 
