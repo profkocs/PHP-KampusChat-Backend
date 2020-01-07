@@ -25,7 +25,7 @@ class ShuffleController extends Controller
             return response()->json($user, 200);
 
         }
-
+/*
         // else
         $count = 0;
         $last_user_id = -1;
@@ -55,7 +55,7 @@ class ShuffleController extends Controller
 
             $count++;
         }
-
+*/
         return response()->json(["message" => "No Content"], 204);
 
 
