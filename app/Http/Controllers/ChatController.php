@@ -6,8 +6,9 @@ use App\Ban;
 use App\Chat;
 use App\Like;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Zend\Diactoros\Request;
+
 
 class ChatController extends Controller
 {
@@ -60,7 +61,6 @@ class ChatController extends Controller
         $validator->validate();
 
         $input = $request->all();
-        $input['is_checked'] = false;
         Chat::create($input);
 
         return response()->json("OK",204);
