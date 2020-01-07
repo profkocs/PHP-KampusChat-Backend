@@ -21,7 +21,7 @@ class ShuffleController extends Controller
             $user = User::find($amIAlreadyMatched->owner_user_id)->first();
             $department = Department::where("id", $user->department_id)->first();
             $user['department_name'] = $department->name;
-            Chat::where('owner_guest_id', $amIAlreadyMatched->owner_user_id)->where('guest_user_id',$user_id)->update(['is_checked' => true]);
+            Chat::where('owner_user_id', $amIAlreadyMatched->owner_user_id)->where('guest_user_id',$user_id)->update(['is_checked' => true]);
             return response()->json($user, 200);
 
         }
