@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -60,6 +61,7 @@ class EventController extends Controller
         // 1 day passed
         if (date_format($event->updated_at, 'd') != date('d')) {
             $event->group = 0;
+            $event->updated_at = Carbon::now();
         }
         $event->is_online = true;
         $event->save();
