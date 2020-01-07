@@ -55,13 +55,12 @@ class ChatController extends Controller
         $validator = Validator::make($request->all(), [
             'owner_user_id' => 'required',
             'guest_user_id' => 'required',
-
-
         ]);
 
         $validator->validate();
 
         $input = $request->all();
+        $input['is_checked'] = false;
         Chat::create($input);
 
         return response()->json("OK",204);
