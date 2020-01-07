@@ -23,7 +23,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/user', function (Request $request) {
 
         $user = $request->user();
-        $department = \App\Department::where('id',$user->department_id)->get();
+        $department = \App\Department::where('id',$user->department_id);
         $user['department_name'] = $department->name;
         return $request->user();
     });
