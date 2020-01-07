@@ -68,6 +68,7 @@ class AuthenticationController extends Controller
         $request->request->add($params);
         $proxy = Request::create('oauth/token', 'POST');
 
+        $proxy['user_id'] = $user_id;
 
         return \Illuminate\Support\Facades\Route::dispatch($proxy);
     }
@@ -99,6 +100,16 @@ class AuthenticationController extends Controller
 
         $request->request->add($params);
         $proxy = Request::create('oauth/token', 'POST');
+
+        if($proxy){
+
+
+            $user = User::where('email',request('username'))->first();
+
+            $proxy['user_id'] = $user->id;
+        }
+
+
         return Route::dispatch($proxy);
 
 
