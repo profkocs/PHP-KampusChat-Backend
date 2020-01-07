@@ -29,7 +29,7 @@ class ListsController extends Controller
         $input = $request->all();
 
         Like::create($input);
-        $did_user_like_me = Like::where('user_id', request('liked_user_id'))->where('liked_user_id', request('user_id'))->get();
+        $did_user_like_me = Like::where('user_id', request('liked_user_id'))->where('liked_user_id', request('user_id'))->first();
 
         if ($did_user_like_me) {
             return response()->json("OK", 200);
@@ -44,19 +44,19 @@ class ListsController extends Controller
     {
 
         $users = array();
-        $my_likes = Like::where('user_id', $user_id)->get();
+        $my_likes = Like::where('user_id', $user_id)->first();
         foreach ($my_likes as $like) {
 
-            $did_user_like_me = Like::where('user_id', $like->liked_user_id)->where('liked_user_id', $user_id)->get();
+            $did_user_like_me = Like::where('user_id', $like->liked_user_id)->where('liked_user_id', $user_id)->first();
 
             if ($did_user_like_me) {
 
-                $did_user_ban_me_or_i_did = Ban::where('user_id', $like->liked_user_id)->where('banned_user_id', $user_id)->orWhere('user_id', $user_id)->where('banned_user_id', $like->liked_user_id)->get();
+                $did_user_ban_me_or_i_did = Ban::where('user_id', $like->liked_user_id)->where('banned_user_id', $user_id)->orWhere('user_id', $user_id)->where('banned_user_id', $like->liked_user_id)->first();
 
                 if (!$did_user_ban_me_or_i_did) {
 
-                    $user = User::find($like->liked_user_id)->get();
-                    $department = Department::where('id',$user->department_id)->get();
+                    $user = User::find($like->liked_user_id)->first();
+                    $department = Department::where('id',$user->department_id)->first();
                     $user['department_name'] = $department->name;
                     $users[$like->liked_user_id] = $user;
 
@@ -81,10 +81,10 @@ class ListsController extends Controller
     {
 
         $users = array();
-        $my_bans = Ban::where('user_id', $user_id)->get();
+        $my_bans = Ban::where('user_id', $user_id)->first();
         foreach ($my_bans as $ban) {
-            $user = User::find($ban->banned_user_id)->get();
-            $department = Department::where('id',$user->department_id)->get();
+            $user = User::find($ban->banned_user_id)->first();
+            $department = Department::where('id',$user->department_id)->first();
             $user['department_name'] = $department->name;
             $users[$ban->banned_user_id] = $user;
 
