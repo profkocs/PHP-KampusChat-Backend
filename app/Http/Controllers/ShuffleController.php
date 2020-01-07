@@ -25,7 +25,7 @@ class ShuffleController extends Controller
             return response()->json($user, 200);
 
         }
-
+/*
         // else
         $count = 0;
         $last_user_id = -1;
