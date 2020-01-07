@@ -14,8 +14,8 @@ class ShuffleController extends Controller
     {
 
 
-        $amIAlreadyMatched = Chat::where('guest_user_id', $user_id)->where('is_checked', false)->get();
-
+        $amIAlreadyMatched = Chat::where('guest_user_id', $user_id)->where('is_checked', false)->first();
+/*
         if ($amIAlreadyMatched) {
 
             $user = User::find($amIAlreadyMatched->owner_user_id)->first();
@@ -25,7 +25,7 @@ class ShuffleController extends Controller
             return response()->json($user, 200);
 
         }
-/*
+
         // else
         $count = 0;
         $last_user_id = -1;
