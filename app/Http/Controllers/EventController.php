@@ -47,11 +47,15 @@ class EventController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required',
+            'email' => 'required',
         ]);
         $validator->validate();
 
-        $event = Event::where('user_id', request('user_id'))->first();
+
+        $user = User::where('email',request('email'))->first();
+
+
+        $event = Event::where('user_id', $user->id)->first();
 
         // 1 day passed
         if (date_format($event->updated_at, 'd') != date('d')) {
