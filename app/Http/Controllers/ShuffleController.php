@@ -30,13 +30,10 @@ class ShuffleController extends Controller
         $count = 0;
         $last_user_id = -1;
         while ($count < 1000) {
-            $event = Event::where("group", "<=", 5)->where("user_id", ">", $last_user_id)->first();
+            $event = Event::where("group", "<=", 5)->where("user_id", ">", $last_user_id)->where("user_id" ,"!=",$user_id)->first();
 
             if ($event) {
                 $last_user_id = $event->user_id;
-                if ($user_id != $event->user_id) {
-
-
                     $is_matched_before = Chat::where('owner_user_id', $user_id)->where('guest_user_id', $last_user_id)->orWhere('owner_user_id', $last_user_id)->where('guest_user_id', $user_id)->first();
 
                     if (!$is_matched_before) {
@@ -50,7 +47,7 @@ class ShuffleController extends Controller
 
 
                     }
-                }
+
             } else {
                 return response()->json(["message" => "No Content"], 204);
             }
