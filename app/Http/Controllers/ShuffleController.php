@@ -15,13 +15,13 @@ class ShuffleController extends Controller
 
 
         $amIAlreadyMatched = Chat::where('guest_user_id', $user_id)->where('is_checked', false)->first();
-/*
+
         if ($amIAlreadyMatched) {
 
             $user = User::find($amIAlreadyMatched->owner_user_id)->first();
             $department = Department::where("id", $user->department_id)->first();
             $user['department_name'] = $department->name;
-            Chat::where('id', $amIAlreadyMatched->id)->update(['is_checked', true]);
+           // Chat::where('id', $amIAlreadyMatched->id)->update(['is_checked', true]);
             return response()->json($user, 200);
 
         }
