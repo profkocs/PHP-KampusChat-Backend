@@ -21,7 +21,7 @@ class ShuffleController extends Controller
             $user = User::find($amIAlreadyMatched->owner_user_id)->first();
             $department = Department::where("id", $user->department_id)->first();
             $user['department_name'] = $department->name;
-            Chat::where('owner_user_id', $amIAlreadyMatched->owner_user_id)->where('guest_user_id',$user_id)->update(['is_checked' => true]);
+            Chat::where('owner_user_id', $amIAlreadyMatched->owner_user_id)->where('guest_user_id', $user_id)->update(['is_checked' => true]);
             return response()->json($user, 200);
 
         }
@@ -29,26 +29,25 @@ class ShuffleController extends Controller
         // else
         $count = 0;
         $last_user_id = -1;
+
         while ($count < 1000) {
-            $event = Event::where("group", "<=", 5)->where("user_id", ">", $last_user_id)->first();
+            $event = Event::where("group", "<", 3)->where("group", ">=", 0)->where("user_id", ">", $last_user_id)->where("user_id", "!=", $user_id)->first();
 
             if ($event) {
                 $last_user_id = $event->user_id;
-                if ($user_id != $event->user_id) {
+                $is_matched_before = Chat::where('owner_user_id', $user_id)->where('guest_user_id', $last_user_id)->orWhere('owner_user_id', $last_user_id)->where('guest_user_id', $user_id)->first();
 
-                    $is_matched_before = Chat::where('owner_user_id', $user_id)->where('guest_user_id', $last_user_id)->orWhere('owner_user_id', $last_user_id)->where('guest_user_id', $user_id)->first();
+                if (!$is_matched_before) {
 
-                    if (!$is_matched_before) {
+                    $user = User::find($event->user_id)->first();
+                    $department = Department::where("id", $user->department_id)->first();
+                    $user['department_name'] = $department->name;
 
-                        $user = User::find($event->user_id)->first();
-                        $department = Department::where("id", $user->department_id)->first();
-                        $user['department_name'] = $department->name;
-
-                        return response()->json($user, 200);
+                    return response()->json($user, 200);
 
 
-                    }
                 }
+
             } else {
                 return response()->json(["message" => "No Content"], 204);
             }
