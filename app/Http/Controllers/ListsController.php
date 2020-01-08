@@ -58,9 +58,9 @@ class ListsController extends Controller
                 if (!$did_user_ban_me_or_i_did) {
 
                     $user = User::find($like->liked_user_id)->first();
-                    $department = Department::where('id',$user->department_id)->first();
+                    $department = Department::where('id', $user->department_id)->first();
                     $user['department_name'] = $department->name;
-                   // $users[$like->liked_user_id] = $user;
+                    // $users[$like->liked_user_id] = $user;
                     $users->push($user);
 
                 }
@@ -83,14 +83,14 @@ class ListsController extends Controller
     public function getBannedUsers($user_id)
     {
 
-        $users = array();
+        $users = new Collection();
         $my_bans = Ban::where('user_id', $user_id)->get();
         foreach ($my_bans as $ban) {
             $user = User::find($ban->banned_user_id)->first();
-            $department = Department::where('id',$user->department_id)->first();
+            $department = Department::where('id', $user->department_id)->first();
             $user['department_name'] = $department->name;
-            $users[$ban->banned_user_id] = $user;
-
+            // $users[$ban->banned_user_id] = $user;
+            $users->push($user);
         }
 
         if (count($users) > 0) {
