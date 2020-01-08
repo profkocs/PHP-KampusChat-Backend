@@ -103,4 +103,19 @@ class EventController extends Controller
     }
 
 
+    public function updateGroup($user_id,$guest_user_id){
+
+        $event = Event::where("user_id",$user_id)->first();
+        $event2 = Event::where("user_id",$guest_user_id)->first();
+
+
+        Event::where("user_id",$user_id)->update(["group" => $event->group+1]);
+        Event::where("user_id",$guest_user_id)->update(["group" => $event2->group+1]);
+
+        return response()->json("OK", 204);
+
+    }
+
+
+
 }

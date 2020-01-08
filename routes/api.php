@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::put('/updateEvent','EventController@updateEvent');
     Route::put('/setOnline','EventController@setOnline');
     Route::put('/setOffline','EventController@setOffline');
+    Route::put('/updateGroup','EventController@updateGroup');
 
 
     // Upload Profile Photo and  Edit Profile

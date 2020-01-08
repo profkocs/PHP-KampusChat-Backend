@@ -7,8 +7,9 @@ use App\Department;
 use App\Like;
 use App\User;
 use http\Env\Response;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Zend\Diactoros\Request;
+
 
 class ListsController extends Controller
 {
