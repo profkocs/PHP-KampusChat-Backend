@@ -29,9 +29,16 @@ class ShuffleController extends Controller
         // else
         $count = 0;
         $last_user_id = -1;
-//where("group", "<", 3)->where("group", ">=", 0)->where("user_id", ">", $last_user_id)
+
+        $event = Event::where("group", "<", 3)->where("group", ">=", 0)->where("user_id", ">", $last_user_id)->where("user_id", "!=", $user_id)->first();
+
+
+        return response()->json($event, 200);
+
+
+        /*
         while ($count < 1000) {
-            $event = Event::where("user_id", "!=", $user_id)->first();
+
 
             if ($event) {
                 $last_user_id = $event->user_id;
@@ -57,7 +64,7 @@ class ShuffleController extends Controller
 
         return response()->json(["message" => "No Content"], 204);
 
-
+*/
     }
 
 }
