@@ -59,18 +59,23 @@ class ListsController extends Controller
                     $user = User::find($like->liked_user_id)->first();
                     $department = Department::where('id',$user->department_id)->first();
                     $user['department_name'] = $department->name;
-                    $users[$like->liked_user_id] = $user;
+                    //$users[$like->liked_user_id] = $user;
+                    $like = $user;
+                }else{
 
+                    $like = null;
                 }
 
 
+            }else{
+                $like = null;
             }
 
         }
 
-        if (count($users) > 0) {
+        if (count($my_likes) > 0) {
 
-            return response()->json($users, 200);
+            return response()->json($my_likes, 200);
         }
 
         return response()->json(["message" => "No Content"], 204);
