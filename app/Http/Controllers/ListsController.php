@@ -7,6 +7,7 @@ use App\Department;
 use App\Like;
 use App\User;
 use http\Env\Response;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -44,7 +45,7 @@ class ListsController extends Controller
     public function getLikedUsers($user_id)
     {
 
-        $users = array();
+        $users = new Collection();
         $my_likes = Like::where('user_id', $user_id)->get();
         foreach ($my_likes as $like) {
 
@@ -59,23 +60,19 @@ class ListsController extends Controller
                     $user = User::find($like->liked_user_id)->first();
                     $department = Department::where('id',$user->department_id)->first();
                     $user['department_name'] = $department->name;
-                    //$users[$like->liked_user_id] = $user;
-                    $like = $user;
-                }else{
+                   // $users[$like->liked_user_id] = $user;
+                    $users->push($user);
 
-                    $like = null;
                 }
 
 
-            }else{
-                $like = null;
             }
 
         }
 
-        if (count($my_likes) > 0) {
+        if (count($users) > 0) {
 
-            return response()->json($my_likes, 200);
+            return response()->json($users, 200);
         }
 
         return response()->json(["message" => "No Content"], 204);
