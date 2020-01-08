@@ -44,7 +44,7 @@ class ListsController extends Controller
     {
 
         $users = array();
-        $my_likes = Like::where('user_id', $user_id)->first();
+        $my_likes = Like::where('user_id', $user_id)->get();
         foreach ($my_likes as $like) {
 
             $did_user_like_me = Like::where('user_id', $like->liked_user_id)->where('liked_user_id', $user_id)->first();
@@ -81,7 +81,7 @@ class ListsController extends Controller
     {
 
         $users = array();
-        $my_bans = Ban::where('user_id', $user_id)->first();
+        $my_bans = Ban::where('user_id', $user_id)->get();
         foreach ($my_bans as $ban) {
             $user = User::find($ban->banned_user_id)->first();
             $department = Department::where('id',$user->department_id)->first();

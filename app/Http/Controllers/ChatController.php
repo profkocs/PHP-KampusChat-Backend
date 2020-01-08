@@ -20,14 +20,14 @@ class ChatController extends Controller
 
         $input = null;
         $users = array();
-        $my_chats = Chat::where('owner_user_id', $user_id)->orWhere('guest_user_id', $user_id)->first();
+        $my_chats = Chat::where('owner_user_id', $user_id)->orWhere('guest_user_id', $user_id)->get();
 
 
         foreach ($my_chats as $chat) {
 
             $other_user_id = ($chat->owner_user_id != $user_id) ? $chat->owner_user_id : $chat->guest_user_id;
 
-            $users[$other_user_id] = User::find($other_user_id)->get();
+            $users[$other_user_id] = User::find($other_user_id)->first();
 
             $did_user_ban_me = Ban::where('user_id', $other_user_id)->where('banned_user_id', $user_id)->first();
             $did_i_ban_user = Ban::where('user_id', $user_id)->where('banned_user_id', $other_user_id)->first();
