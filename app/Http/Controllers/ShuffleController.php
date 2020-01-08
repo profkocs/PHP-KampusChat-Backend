@@ -35,11 +35,11 @@ class ShuffleController extends Controller
 
             if (!$is_matched_before) {
 
-                $user = User::find($event->user_id)->first();
-                $department = Department::where("id", $user->department_id)->first();
-                $user['department_name'] = $department->name;
+                $new_user = User::where("id",$event->user_id)->first();
+                $department = Department::where("id", $new_user->department_id)->first();
+                $new_user['department_name'] = $department->name;
 
-                return response()->json($user, 200);
+                return response()->json($new_user, 200);
 
             }
 
