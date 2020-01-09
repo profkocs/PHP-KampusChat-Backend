@@ -39,7 +39,7 @@ class ChatController extends Controller
             $user['did_i_banned_user'] = ($did_i_ban_user) ? true : false;
             $user['liked_each_other'] = ($did_i_liked_user && $did_user_like_me) ? true : false;
 
-            $department = Department::where('id',$user->id)->first();
+            $department = Department::where('id',$user->department_id)->first();
             $user['department_name'] = $department->name;
             //$users[$other_user_id] = $input;
             $users->push($user);
