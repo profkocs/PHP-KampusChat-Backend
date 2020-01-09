@@ -47,6 +47,8 @@ class ListsController extends Controller
 
         $users = new Collection();
         $my_likes = Like::where('user_id', $user_id)->get();
+        return response()->json($my_likes, 200);
+
         foreach ($my_likes as $like) {
 
             $did_user_like_me = Like::where('user_id', $like->liked_user_id)->where('liked_user_id', $user_id)->first();
@@ -70,10 +72,10 @@ class ListsController extends Controller
 
         }
 
-
+        if (count($users) > 0) {
 
             return response()->json($users, 200);
-
+        }
 
         return response()->json(["message" => "No Content"], 204);
 
