@@ -47,7 +47,6 @@ class ListsController extends Controller
 
         $users = new Collection();
         $my_likes = Like::where('user_id', $user_id)->get();
-        return response()->json($my_likes, 200);
 
         foreach ($my_likes as $like) {
 
@@ -60,6 +59,7 @@ class ListsController extends Controller
                 if (!$did_user_ban_me_or_i_did) {
 
                     $user = User::find($like->liked_user_id)->first();
+                    return response()->json($user, 200);
                     $department = Department::where('id', $user->department_id)->first();
                     $user['department_name'] = $department->name;
                     // $users[$like->liked_user_id] = $user;
