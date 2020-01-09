@@ -8,6 +8,7 @@ use App\Department;
 use App\Like;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -18,8 +19,8 @@ class ChatController extends Controller
     public function getChats($user_id)
     {
 
-        $input = null;
-        $users = array();
+
+        $users = new Collection();
         $my_chats = Chat::where('owner_user_id', $user_id)->orWhere('guest_user_id', $user_id)->get();
 
 
@@ -27,26 +28,26 @@ class ChatController extends Controller
 
             $other_user_id = ($chat->owner_user_id != $user_id) ? $chat->owner_user_id : $chat->guest_user_id;
 
-            $users[$other_user_id] = User::find($other_user_id)->first();
+            $user = User::where("id",$other_user_id)->first();
 
             $did_user_ban_me = Ban::where('user_id', $other_user_id)->where('banned_user_id', $user_id)->first();
             $did_i_ban_user = Ban::where('user_id', $user_id)->where('banned_user_id', $other_user_id)->first();
             $did_user_like_me = Like::where('user_id', $other_user_id)->where('liked_user_id', $user_id)->first();
             $did_i_liked_user = Like::where('user_id', $user_id)->where('liked_user_id', $other_user_id)->first();
-            $input = $users[$other_user_id];
 
-            $input['did_user_banned_me'] = ($did_user_ban_me) ? true : false;
-            $input['did_i_banned_user'] = ($did_i_ban_user) ? true : false;
-            $input['liked_each_other'] = ($did_i_liked_user && $did_user_like_me) ? true : false;
+            $user['did_user_banned_me'] = ($did_user_ban_me) ? true : false;
+            $user['did_i_banned_user'] = ($did_i_ban_user) ? true : false;
+            $user['liked_each_other'] = ($did_i_liked_user && $did_user_like_me) ? true : false;
 
-            $department = Department::where('id',$input['id'])->first();
-            $input['department_name'] = $department->name;
-            $users[$other_user_id] = $input;
+            $department = Department::where('id',$user->id)->first();
+            $user['department_name'] = $department->name;
+            //$users[$other_user_id] = $input;
+            $users->push($user);
 
         }
 
-        if (count($my_chats) > 0) {
-            return response()->json($input);
+        if (count($users) > 0) {
+            return response()->json($users);
         }
 
         return response()->json(["message" => "No Content"], 204);
