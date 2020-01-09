@@ -12,13 +12,12 @@ class ProfileController extends Controller
     public function updateProfile()
     {
         request()->validate([
-            'bio' => 'required',
             'url' => 'required',
             'user_id' => 'required'
         ]);
 
 
-        User::where('id', request('user_id'))->update(['bio' => request('bio'), 'profile_photo_url' => request('url')]);
+        User::where('id', request('user_id'))->update(['profile_photo_url' => request('url')]);
         return response()->json("OK", 204);
 
     }
