@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('date_of_birth');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('bio')->nullable();
-            $table->string('profile_photo_url')->nullable();
+            $table->longText('profile_photo_url')->nullable();
             $table->timestamps();
            // $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
         });
