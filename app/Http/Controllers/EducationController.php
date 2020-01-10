@@ -38,7 +38,7 @@ class EducationController extends Controller
     public function departments($id)
     {
 
-        $result = University::where("id",$id)->departments;
+        $result = University::find($id)->departments;
         return response()->json($result);
 
     }
