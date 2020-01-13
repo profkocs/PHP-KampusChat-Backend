@@ -10,7 +10,7 @@ use App\User;
 class ShuffleController extends Controller
 {
 
-    public function shuffle($user_id)
+    public function shuffle($user_id,$last_user_id)
     {
 
 
@@ -28,7 +28,7 @@ class ShuffleController extends Controller
 
         // else
 
-        $events = Event::where("group", "<", 3)->where("group", ">=", 0)->where("user_id", "!=", $user_id)->get();
+        $events = Event::where("group", "<", 3)->where("group", ">=", 0)->where("user_id", "!=", $user_id)->where("user_id",">",$last_user_id)->get();
 
         foreach ($events as $event) {
             $is_matched_before = Chat::where('owner_user_id', $user_id)->where('guest_user_id', $event->user_id)->orWhere('owner_user_id', $event->user_id)->where('guest_user_id', $user_id)->first();
