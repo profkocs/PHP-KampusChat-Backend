@@ -13,7 +13,7 @@ class ShuffleController extends Controller
     public function shuffle($user_id,$count)
     {
 
-
+/*
         $amIAlreadyMatched = Chat::where('guest_user_id', $user_id)->where('is_checked', false)->first();
 
         if ($amIAlreadyMatched) {
@@ -25,7 +25,7 @@ class ShuffleController extends Controller
             return response()->json($user, 200);
 
         }
-
+*/
         // else
 
         $events = Event::where("id",">",$count)->where("group", "<", 3)->where("group", ">=", 0)->where("user_id", "!=", $user_id)->get();
