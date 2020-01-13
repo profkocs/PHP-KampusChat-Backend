@@ -29,23 +29,22 @@ class ShuffleController extends Controller
         // else
 
         $events = Event::where("id",">",$count)->where("group", "<", 3)->where("group", ">=", 0)->where("user_id", "!=", $user_id)->get();
-
+        $cc = 0;
         foreach ($events as $event) {
-            $is_matched_before = Chat::where('owner_user_id', $user_id)->where('guest_user_id', $event->user_id)->orWhere('owner_user_id', $event->user_id)->where('guest_user_id', $user_id)->first();
+            if($cc > $count){
+                $is_matched_before = Chat::where('owner_user_id', $user_id)->where('guest_user_id', $event->user_id)->orWhere('owner_user_id', $event->user_id)->where('guest_user_id', $user_id)->first();
 
-            if (!$is_matched_before) {
+                if (!$is_matched_before) {
 
-                $new_user = User::where("id",$event->user_id)->first();
-                $department = Department::where("id", $new_user->department_id)->first();
-                $new_user['department_name'] = $department->name;
-                if($count == -1){
-                    $count = 0;
+                    $new_user = User::where("id",$event->user_id)->first();
+                    $department = Department::where("id", $new_user->department_id)->first();
+                    $new_user['department_name'] = $department->name;
+                    $new_user['count'] = $cc;
+                    return response()->json($new_user, 200);
+
                 }
-                $new_user['count'] = $count;
-                return response()->json($new_user, 200);
-
             }
-            $count++;
+            $cc++;
 
         }
 
