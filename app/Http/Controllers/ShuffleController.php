@@ -38,6 +38,9 @@ class ShuffleController extends Controller
                 $new_user = User::where("id",$event->user_id)->first();
                 $department = Department::where("id", $new_user->department_id)->first();
                 $new_user['department_name'] = $department->name;
+                if($count == -1){
+                    $count = 0;
+                }
                 $new_user['count'] = $count;
                 return response()->json($new_user, 200);
 
