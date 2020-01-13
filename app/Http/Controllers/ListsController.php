@@ -61,6 +61,7 @@ class ListsController extends Controller
                     $user = User::where("id",$like->liked_user_id)->first();
                     $department = Department::where('id', $user->department_id)->first();
                     $user['department_name'] = $department->name;
+                    $user['liked_each_other'] = true;
                     // $users[$like->liked_user_id] = $user;
                     $users->push($user);
 
@@ -91,6 +92,7 @@ class ListsController extends Controller
             $department = Department::where('id', $user->department_id)->first();
             $user['department_name'] = $department->name;
             // $users[$ban->banned_user_id] = $user;
+            $user->profile_photo_url = "forbidden";
             $users->push($user);
         }
 
