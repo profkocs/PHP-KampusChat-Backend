@@ -45,7 +45,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 
 
     // Shuffle
-    Route::get('/shuffle/{user_id}','ShuffleController@shuffle');
+    Route::get('/shuffle/{user_id}/{last_user_id}','ShuffleController@shuffle');
 
 
     // Like
