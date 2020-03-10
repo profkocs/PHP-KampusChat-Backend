@@ -126,7 +126,7 @@ class MessageController extends Controller
     }
 
 
-    public function setMessageSeenValue($message_id){
+    public function setIsMessageSeenValue($message_id){
 
         $message = \App\Message::where('id', $message_id)->first();
         $message->is_seen = true;
