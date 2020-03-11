@@ -51,8 +51,8 @@ class AuthenticationController extends Controller
         $input['password'] = bcrypt($input['password']);
         $user_id = User::create($input)->id;
 
-        $email_sender = new EmailSender();
-        $email_sender->sendEmail(request('email'), 'verification');
+        //$email_sender = new EmailSender();
+        //$email_sender->sendEmail(request('email'), 'verification');
 
         Event::create(["user_id" => $user_id,"group" => 0 , "is_online" => false , "last_seen_at" => Carbon::now()]);
 
