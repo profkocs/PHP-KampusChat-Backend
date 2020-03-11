@@ -20,7 +20,7 @@ class MessageController extends Controller
 
         foreach ($chats as $chat) {
 
-            $message = \App\Message::where('chat_id', $chat->id)->where('is_seen', false)->first();
+            $message = \App\Message::where('chat_id', $chat->id)->where('sender_user_id','!=',$user_id)->where('is_seen', false)->first();
             if ($message) {
                 $messages->push($message);
             }
