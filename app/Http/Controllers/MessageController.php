@@ -68,7 +68,7 @@ class MessageController extends Controller
 
         $chat = Chat::where('id', $chat_id)->first();
 
-        if ($chat->owner_user_id != $user_id) {
+        if ($chat->owner_user_id == $user_id) {
             return response()->json(["status" => $chat->is_owner_typing], 200);
         } else {
             return response()->json(["status" => $chat->is_guest_typing], 200);
