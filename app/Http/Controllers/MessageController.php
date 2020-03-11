@@ -69,9 +69,9 @@ class MessageController extends Controller
         $chat = Chat::where('id', $chat_id)->first();
 
         if ($chat->owner_user_id != $user_id) {
-            return response()->json($chat->is_owner_typing, 200);
+            return response()->json(["status" => $chat->is_owner_typing], 200);
         } else {
-            return response()->json($chat->is_guest_typing, 200);
+            return response()->json(["status" => $chat->is_guest_typing], 200);
         }
 
 
@@ -106,7 +106,6 @@ class MessageController extends Controller
 
         $message = \App\Message::create($input);
 
-
         if ($message) {
             return response()->json($message, 200);
         }
@@ -120,7 +119,7 @@ class MessageController extends Controller
     {
 
         $message = \App\Message::where('id', $message_id)->first();
-        return response()->json($message->is_seen, 200);
+        return response()->json(["status" =>$message->is_seen], 200);
 
 
     }
@@ -130,6 +129,7 @@ class MessageController extends Controller
 
         $message = \App\Message::where('id', $message_id)->first();
         $message->is_seen = true;
+        $message->save();
         return response()->json("OK", 204);
 
 
