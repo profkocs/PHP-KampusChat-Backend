@@ -16,14 +16,18 @@ class MessageController extends Controller
     {
 
 
-        $last_time = date('Y-M-d H:m:s', strtotime($last_date));
+       
         $messages = new Collection();
         $chats = Chat::where('owner_user_id', $user_id)->orWhere('guest_user_id', $user_id)->get();
-
+        $last_time = date('Y-M-d H:m:s', strtotime($last_date));
         foreach ($chats as $chat) {
 
-            $message = \App\Message::where('chat_id', $chat->id)->where('sender_user_id','!=',$user_id)->where('is_seen', false)->where('created_at','>',$last_time)->first();
-            if ($message) {
+            $message = \App\Message::where('chat_id', $chat->id)->where('sender_user_id','!=',$user_id)->where('is_seen', false)->first();
+           
+            $time = date('Y-M-d H:m:s', strtotime($message->created_at));
+            
+
+            if ($message && $time > $last_time) {
                 $messages->push($message);
             }
         }
