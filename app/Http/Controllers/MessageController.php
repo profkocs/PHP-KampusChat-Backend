@@ -12,7 +12,7 @@ class MessageController extends Controller
     //
 
 
-    public function checkNewMessages($user_id)
+    public function checkNewMessages($user_id,$last_date)
     {
 
         $messages = new Collection();
@@ -20,7 +20,7 @@ class MessageController extends Controller
 
         foreach ($chats as $chat) {
 
-            $message = \App\Message::where('chat_id', $chat->id)->where('sender_user_id','!=',$user_id)->where('is_seen', false)->first();
+            $message = \App\Message::where('chat_id', $chat->id)->where('sender_user_id','!=',$user_id)->where('is_seen', false)->where('created_at','>',$last_date)->first();
             if ($message) {
                 $messages->push($message);
             }
