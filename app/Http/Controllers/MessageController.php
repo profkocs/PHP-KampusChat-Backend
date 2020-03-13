@@ -16,7 +16,7 @@ class MessageController extends Controller
     {
 
 
-        $last_time = date('YYYY-MM-DD HH:mm:ss', strtotime($last_date));
+        $last_time = date('Y-M-d H:m:s', strtotime($last_date));
         $messages = new Collection();
         $chats = Chat::where('owner_user_id', $user_id)->orWhere('guest_user_id', $user_id)->get();
 
