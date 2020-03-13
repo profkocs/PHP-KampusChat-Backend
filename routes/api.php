@@ -67,7 +67,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     // Message
 
     // Kullanıcı Ya Farklı Kullanıcılardan gelen Yeni Mesajları Bildirecek
-    Route::get('/checkNewMessages/{user_id}','MessageController@checkNewMessages');
+    Route::get('/checkNewMessages/{user_id}/{last_date}','MessageController@checkNewMessages');
     Route::get('/getAllMessages/{chat_id}','MessageController@getAllMessages');
     // Kullanıcıya Sadece 1 Kişiden Gelen Yeni Mesajları Gösterecek
     Route::get('/getNewMessages/{chat_id}/{user_id}','MessageController@getNewMessages');
