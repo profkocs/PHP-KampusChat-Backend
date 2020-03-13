@@ -15,12 +15,14 @@ class MessageController extends Controller
     public function checkNewMessages($user_id,$last_date)
     {
 
+
+        $last_time = date('YYYY-MM-DD HH:mm:ss', strtotime($last_date));
         $messages = new Collection();
         $chats = Chat::where('owner_user_id', $user_id)->orWhere('guest_user_id', $user_id)->get();
 
         foreach ($chats as $chat) {
 
-            $message = \App\Message::where('chat_id', $chat->id)->where('sender_user_id','!=',$user_id)->where('is_seen', false)->where('created_at','>',$last_date)->first();
+            $message = \App\Message::where('chat_id', $chat->id)->where('sender_user_id','!=',$user_id)->where('is_seen', false)->where('created_at','>',$last_time)->first();
             if ($message) {
                 $messages->push($message);
             }
