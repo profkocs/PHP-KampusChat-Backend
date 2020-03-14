@@ -69,10 +69,12 @@ class MessageController extends Controller
         foreach($messages as $message){
             $time = date('Y-M-d H:m:s', strtotime($message->created_at));
 
+
             if($time > $last_time){
-              $r_messages->push($message)
+                $r_messages->push($message);
             }
-         
+
+    
 
         }
 
