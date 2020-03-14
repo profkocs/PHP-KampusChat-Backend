@@ -59,13 +59,26 @@ class MessageController extends Controller
 
     }
 
-    public function getNewMessages($chat_id, $user_id)
+    public function getNewMessages($chat_id, $user_id,$last_date)
     {
 
+        $r_messages = new Collection();
         $messages = \App\Message::where('chat_id', $chat_id)->where('sender_user_id', '!=', $user_id)->where('is_seen', false)->get();
+        $last_time = date('Y-M-d H:m:s', strtotime($last_date));
 
-        if (count($messages)) {
-            return response()->json($messages, 200);
+        foreach($messages as $message){
+            $time = date('Y-M-d H:m:s', strtotime($message->created_at));
+
+            if($time > $last_time){
+              $r_messages->push($message)
+            }
+         
+
+        }
+
+
+        if (count($r_messages)) {
+            return response()->json($r_messages, 200);
         }
         return response()->json(["message" => "No Content"], 204);
 
