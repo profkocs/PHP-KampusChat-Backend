@@ -19,20 +19,15 @@ class MessageController extends Controller
        
         $messages = new Collection();
         $chats = Chat::where('owner_user_id', $user_id)->orWhere('guest_user_id', $user_id)->get();
-        $last_time = date('Y-M-d H:m:s', strtotime($last_date));
         foreach ($chats as $chat) {
 
-            $messages = \App\Message::where('chat_id', $chat->id)->where('sender_user_id','!=',$user_id)->where('is_seen', false)->where('created_at','>',$last_date)->get();
-           /*
+            $tmessages = \App\Message::where('chat_id', $chat->id)->where('sender_user_id','!=',$user_id)->where('is_seen', false)->where('created_at','>',$last_date)->get();
+        
             foreach($tmessages as $message){
-
-                $time = date('Y-M-d H:m:s', strtotime($message->created_at));
-                if ($message && $time > $last_time) {
-                    $messages->push($message);
-                }
-
+                $messages->push($message);
             }
-*/
+
+
         }
 
         if (count($messages) > 0) {
@@ -62,24 +57,10 @@ class MessageController extends Controller
     public function getNewMessages($chat_id, $user_id,$last_date)
     {
 
-        $r_messages = new Collection();
-        $messages = \App\Message::where('chat_id', $chat_id)->where('sender_user_id', '!=', $user_id)->where('is_seen', false)->get();
-        $last_time = date('Y-M-d H:m:s', strtotime($last_date));
-
-        foreach($messages as $message){
-            $time = date('Y-M-d H:m:s', strtotime($message->created_at));
-
-
-            if($time > $last_time){
-                $r_messages->push($message);
-            }
-
+        $messages = \App\Message::where('chat_id', $chat_id)->where('sender_user_id', '!=', $user_id)->where('is_seen', false)->where('created_at','>',$last_date)->get();
     
 
-        }
-
-
-        if (count($r_messages)) {
+        if (count($messages)) {
             return response()->json($r_messages, 200);
         }
         return response()->json(["message" => "No Content"], 204);
