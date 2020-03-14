@@ -61,7 +61,7 @@ class MessageController extends Controller
     
 
         if (count($messages)) {
-            return response()->json($r_messages, 200);
+            return response()->json($messages, 200);
         }
         return response()->json(["message" => "No Content"], 204);
 
