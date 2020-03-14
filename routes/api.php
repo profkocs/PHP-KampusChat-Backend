@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/checkNewMessages/{user_id}/{last_date}','MessageController@checkNewMessages');
     Route::get('/getAllMessages/{chat_id}','MessageController@getAllMessages');
     // Kullanıcıya Sadece 1 Kişiden Gelen Yeni Mesajları Gösterecek
-    Route::get('/getNewMessages/{chat_id}/{user_id}','MessageController@getNewMessages');
+    Route::get('/getNewMessages/{chat_id}/{user_id}/{last_date}','MessageController@getNewMessages');
     Route::get('/checkUserTyping/{chat_id}/{user_id}','MessageController@checkIfUserIsTyping');
     Route::put('/setUserTypingValue/{chat_id}/{user_id}/{value}','MessageController@setUserTypingValue');
     Route::post('/sendMessage/{chat_id}/{user_id}/{type}/{message}','MessageController@sendMessage');
