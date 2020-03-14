@@ -22,7 +22,7 @@ class MessageController extends Controller
         $last_time = date('Y-M-d H:m:s', strtotime($last_date));
         foreach ($chats as $chat) {
 
-            $messages = \App\Message::where('chat_id', $chat->id)->where('sender_user_id','!=',$user_id)->where('is_seen', false)->where('created_at','>',last_date)->get();
+            $messages = \App\Message::where('chat_id', $chat->id)->where('sender_user_id','!=',$user_id)->where('is_seen', false)->where('created_at','>',$last_date)->get();
            /*
             foreach($tmessages as $message){
 
