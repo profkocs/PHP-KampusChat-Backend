@@ -41,6 +41,7 @@ class ChatController extends Controller
 
             $department = Department::where('id',$user->department_id)->first();
             $chat['department_name'] = $department->name;
+            $chat['profile_photo_url'] = $user->profile_photo_url;
             //$users[$other_user_id] = $input;
             //$users->push($user);
 
