@@ -79,28 +79,14 @@ class EventController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required',
+            'value' => 'required'
         ]);
         $validator->validate();
 
-        Event::where('user_id',request('user_id'))->update(['is_online' => true]);
+        Event::where('user_id',request('user_id'))->update(['is_online' => request('value')]);
         return response()->json("OK", 204);
     }
 
-
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function setOffline(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'required',
-        ]);
-        $validator->validate();
-
-        Event::where('user_id',request('user_id'))->update(['is_online' => false]);
-        return response()->json("OK", 204);
-    }
 
 
     public function updateGroup($user_id,$guest_user_id){
