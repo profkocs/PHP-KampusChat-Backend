@@ -35,19 +35,19 @@ class ChatController extends Controller
             $did_user_like_me = Like::where('user_id', $other_user_id)->where('liked_user_id', $user_id)->first();
             $did_i_liked_user = Like::where('user_id', $user_id)->where('liked_user_id', $other_user_id)->first();
 
-            $user['did_user_banned_me'] = ($did_user_ban_me) ? true : false;
-            $user['did_i_banned_user'] = ($did_i_ban_user) ? true : false;
-            $user['liked_each_other'] = ($did_i_liked_user && $did_user_like_me) ? true : false;
+            $chat['did_user_banned_me'] = ($did_user_ban_me) ? true : false;
+            $chat['did_i_banned_user'] = ($did_i_ban_user) ? true : false;
+            $chat['liked_each_other'] = ($did_i_liked_user && $did_user_like_me) ? true : false;
 
             $department = Department::where('id',$user->department_id)->first();
-            $user['department_name'] = $department->name;
+            $chat['department_name'] = $department->name;
             //$users[$other_user_id] = $input;
-            $users->push($user);
+            //$users->push($user);
 
         }
 
-        if (count($users) > 0) {
-            return response()->json($users);
+        if (count($my_chats) > 0) {
+            return response()->json($my_chats);
         }
 
         return response()->json(["message" => "No Content"], 204);
