@@ -116,6 +116,14 @@ class EventController extends Controller
 
     }
 
+  
+    public function checkIfUserIsOnline($user_id){
+
+    $event=Event::where("user_id",$user_id)->first();
+    return response()->json(["status"=> $event->is_online]);
+
+    }
+
 
 
 }
