@@ -80,6 +80,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     // Logout
     Route::post('/logout', 'AuthenticationController@logout');
+    
 });
 
 // Education
