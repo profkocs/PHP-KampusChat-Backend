@@ -85,6 +85,14 @@ class MessageController extends Controller
     public function setUserTypingValue($chat_id, $user_id, $value)
     {
 
+        $validator = Validator::make($request->all(), [
+            'chat_id' => 'required',
+            'user_id' => 'required',
+            'value' => 'required',
+        ]);
+        $validator->validate();
+
+
         $chat = Chat::where('id', $chat_id)->first();
 
         if ($chat->owner_user_id == $user_id) {
@@ -103,6 +111,14 @@ class MessageController extends Controller
 
     public function sendMessage($chat_id, $user_id, $type, $message)
     {
+
+        $validator = Validator::make($request->all(), [
+            'chat_id' => 'required',
+            'user_id' => 'required',
+            'type' => 'required',
+            'message' => 'required'
+        ]);
+        $validator->validate();
 
         $input['chat_id'] = $chat_id;
         $input['sender_user_id'] = $user_id;
@@ -131,6 +147,12 @@ class MessageController extends Controller
 
 
     public function setIsMessageSeenValue($message_id){
+
+        $validator = Validator::make($request->all(), [
+            'message_id' => 'required',
+        ]);
+        $validator->validate();
+
 
         $message = \App\Message::where('id', $message_id)->first();
         $message->is_seen = true;

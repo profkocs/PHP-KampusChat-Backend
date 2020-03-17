@@ -73,10 +73,10 @@ Route::group(['middleware' => ['auth:api']], function () {
     // Kullanıcıya Sadece 1 Kişiden Gelen Yeni Mesajları Gösterecek
     Route::get('/getNewMessages/{chat_id}/{user_id}/{last_date}','MessageController@getNewMessages');
     Route::get('/checkUserTyping/{chat_id}/{user_id}','MessageController@checkIfUserIsTyping');
-    Route::put('/setUserTypingValue/{chat_id}/{user_id}/{value}','MessageController@setUserTypingValue');
-    Route::post('/sendMessage/{chat_id}/{user_id}/{type}/{message}','MessageController@sendMessage');
+    Route::put('/setUserTypingValue','MessageController@setUserTypingValue');
+    Route::post('/sendMessage','MessageController@sendMessage');
     Route::get('/isMessageS1een/{message_id}','MessageController@isMessageSeen');
-    Route::put('/setIsMessageSeenValue/{message_id}','MessageController@setIsMessageSeenValue');
+    Route::put('/setIsMessageSeenValue','MessageController@setIsMessageSeenValue');
 
     // Logout
     Route::post('/logout', 'AuthenticationController@logout');
