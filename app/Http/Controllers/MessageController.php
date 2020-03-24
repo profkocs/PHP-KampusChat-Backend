@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Chat;
 use http\Message;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Validator;
 
 class MessageController extends Controller
 {
@@ -16,13 +18,13 @@ class MessageController extends Controller
     {
 
 
-       
+
         $messages = new Collection();
         $chats = Chat::where('owner_user_id', $user_id)->orWhere('guest_user_id', $user_id)->get();
         foreach ($chats as $chat) {
 
             $tmessages = \App\Message::where('chat_id', $chat->id)->where('sender_user_id','!=',$user_id)->where('is_seen', false)->where('created_at','>',$last_date)->get();
-        
+
             foreach($tmessages as $message){
                 $messages->push($message);
             }
@@ -58,7 +60,7 @@ class MessageController extends Controller
     {
 
         $messages = \App\Message::where('chat_id', $chat_id)->where('sender_user_id', '!=', $user_id)->where('is_seen', false)->where('created_at','>',$last_date)->get();
-    
+
 
         if (count($messages)) {
             return response()->json($messages, 200);
@@ -82,7 +84,7 @@ class MessageController extends Controller
 
     }
 
-    public function setUserTypingValue($chat_id, $user_id, $value)
+    public function setUserTypingValue($request)
     {
 
         $validator = Validator::make($request->all(), [
@@ -93,12 +95,12 @@ class MessageController extends Controller
         $validator->validate();
 
 
-        $chat = Chat::where('id', $chat_id)->first();
+        $chat = Chat::where('id', $request->chat_id)->first();
 
-        if ($chat->owner_user_id == $user_id) {
-            $chat->is_owner_typing = $value;
-        } else if ($chat_id->guest_user_id == $user_id) {
-            $chat->is_guest_typing = $value;
+        if ($chat->owner_user_id == $request->user_id) {
+            $chat->is_owner_typing = $request->value;
+        } else if ($request->chat_id->guest_user_id == $request->user_id) {
+            $chat->is_guest_typing = $request->value;
         }
 
         $chat->save();
@@ -109,7 +111,7 @@ class MessageController extends Controller
     }
 
 
-    public function sendMessage()
+    public function sendMessage($request)
     {
 
         $validator = Validator::make($request->all(), [
@@ -120,10 +122,10 @@ class MessageController extends Controller
         ]);
         $validator->validate();
 
-        $input['chat_id'] = $chat_id;
-        $input['sender_user_id'] = $user_id;
-        $input['type'] = $type;
-        $input['message'] = $message;
+        $input['chat_id'] = $request->chat_id;
+        $input['sender_user_id'] = $request->user_id;
+        $input['type'] = $request->type;
+        $input['message'] = $request->message;
 
         $message = \App\Message::create($input);
 
@@ -146,7 +148,7 @@ class MessageController extends Controller
     }
 
 
-    public function setIsMessageSeenValue($message_id){
+    public function setIsMessageSeenValue($request){
 
         $validator = Validator::make($request->all(), [
             'message_id' => 'required',
@@ -154,7 +156,7 @@ class MessageController extends Controller
         $validator->validate();
 
 
-        $message = \App\Message::where('id', $message_id)->first();
+        $message = \App\Message::where('id', $request->message_id)->first();
         $message->is_seen = true;
         $message->save();
         return response()->json("OK", 204);
