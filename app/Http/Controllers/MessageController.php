@@ -109,7 +109,7 @@ class MessageController extends Controller
     }
 
 
-    public function sendMessage($chat_id, $user_id, $type, $message)
+    public function sendMessage()
     {
 
         $validator = Validator::make($request->all(), [
