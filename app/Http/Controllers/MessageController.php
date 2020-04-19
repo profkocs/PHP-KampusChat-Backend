@@ -145,6 +145,7 @@ class MessageController extends Controller
         return response()->json(["status" => $message->is_seen], 200);
 
 
+    
     }
 
 
