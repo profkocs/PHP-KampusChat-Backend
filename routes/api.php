@@ -75,7 +75,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/checkUserTyping/{chat_id}/{user_id}','MessageController@checkIfUserIsTyping');
     Route::put('/setUserTypingValue','MessageController@setUserTypingValue');
     Route::post('/sendMessage','MessageController@sendMessage');
-    Route::get('/isMessageS1een/{message_id}','MessageController@isMessageSeen');
+    Route::get('/isMessageSeen/{message_id}','MessageController@isMessageSeen');
     Route::put('/setIsMessageSeenValue','MessageController@setIsMessageSeenValue');
 
     // Logout
